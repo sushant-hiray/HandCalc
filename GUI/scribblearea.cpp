@@ -1,6 +1,8 @@
 #include <QtGui>
-
+#include <cstdio>
+#include <iostream>
  #include "scribblearea.h"
+using namespace std;
 
  ScribbleArea::ScribbleArea(QWidget *parent)
      : QWidget(parent)
@@ -28,7 +30,9 @@
      if (event->button() == Qt::LeftButton) {
          lastPoint = event->pos();
          scribbling = true;
+         cout<<event->x()<<"  "<<event->y()<<endl;
      }
+
  }
 
  void ScribbleArea::mouseMoveEvent(QMouseEvent *event)
@@ -74,7 +78,12 @@
      int rad = (myPenWidth / 2) + 2;
      update(QRect(lastPoint, endPoint).normalized()
                                       .adjusted(-rad, -rad, +rad, +rad));
+     temp=lastPoint;
      lastPoint = endPoint;
+     if(lastPoint!=temp)
+     {
+         cout<<"Moving "<<lastPoint.x() <<" "<<lastPoint.y()<<endl;
+     }
  }
 
  void ScribbleArea::resizeImage(QImage *image, const QSize &newSize)
@@ -89,20 +98,4 @@
      *image = newImage;
  }
 
- void ScribbleArea::print()
- {
- #ifndef QT_NO_PRINTER
-     QPrinter printer(QPrinter::HighResolution);
 
-     QPrintDialog *printDialog = new QPrintDialog(&printer, this);
-     if (printDialog->exec() == QDialog::Accepted) {
-         QPainter painter(&printer);
-         QRect rect = painter.viewport();
-         QSize size = image.size();
-         size.scale(rect.size(), Qt::KeepAspectRatio);
-         painter.setViewport(rect.x(), rect.y(), size.width(), size.height());
-         painter.setWindow(image.rect());
-         painter.drawImage(0, 0, image);
-     }
- #endif // QT_NO_PRINTER
- }

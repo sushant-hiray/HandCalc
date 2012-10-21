@@ -20,8 +20,6 @@
      QColor penColor() const { return myPenColor; }
      int penWidth() const { return myPenWidth; }
 
- public slots:
-     void print();
 
  protected:
      void mousePressEvent(QMouseEvent *event);
@@ -40,5 +38,6 @@
      QColor myPenColor;
      QImage image;
      QPoint lastPoint;
+     QPoint temp;
  };
 #endif // SCRIBBLEAREA_H
