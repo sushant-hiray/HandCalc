@@ -1,7 +1,7 @@
 #include <QtGui>
 #include <QMenu>
- #include "mainWindow.h"
- #include "scribblearea.h"
+#include "mainWindow.h"
+#include "scribblearea.h"
 
 
 
@@ -25,6 +25,8 @@
       optionMenu->addAction(penWidthAct);
       optionMenu->addAction(clearScreenAct);
       helpMenu->addAction(aboutAct);
+      helpMenu->addAction(creditsAct);
+
  }
 
  void MainWindow::createActions()
@@ -42,6 +44,9 @@
 
      aboutAct = new QAction(tr("&About"), this);
      connect(aboutAct, SIGNAL(triggered()), this, SLOT(about()));
+
+     creditsAct = new QAction(tr("&Credits"), this);
+     connect(creditsAct, SIGNAL(triggered()), this, SLOT(credit()));
  }
 
  void MainWindow::penColor()
@@ -75,3 +80,17 @@
                 ));
  }
 
+
+ void MainWindow::credit()
+ {
+     QMessageBox msgBox;
+     msgBox.setText(
+             tr("<p>The <b>Handy_Calc</b> is a "
+                "product of IITB Grads<br>"
+                "Namely:Sushant , Ashish and Sanchit <br>"
+                "To know more about us "
+                "just log on to www.cse.iitb.ac.in/people/Btech2 <br>"
+                "We are also available for being hired!! :P </p>"
+                ));
+     msgBox.exec();
+ }

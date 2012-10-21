@@ -18,6 +18,7 @@
      void penColor();
      void penWidth();
      void about();
+     void credit();
 
  private:
      void createActions();
@@ -29,6 +30,7 @@
       QAction *penWidthAct;
       QAction *clearScreenAct;
       QAction *aboutAct;
+      QAction *creditsAct;
 
      ScribbleArea *scribbleArea;
  };
