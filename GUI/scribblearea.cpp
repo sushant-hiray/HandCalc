@@ -1,8 +1,9 @@
 #include <QtGui>
 #include <cstdio>
 #include <iostream>
- #include "scribblearea.h"
+#include "scribblearea.h"
 using namespace std;
+
 
  ScribbleArea::ScribbleArea(QWidget *parent)
      : QWidget(parent)
@@ -12,6 +13,7 @@ using namespace std;
      scribbling = false;
      myPenWidth = 1;
      myPenColor = Qt::blue;
+     myTimer.start();
  }
 
 
@@ -30,7 +32,7 @@ using namespace std;
      if (event->button() == Qt::LeftButton) {
          lastPoint = event->pos();
          scribbling = true;
-         cout<<event->x()<<"  "<<event->y()<<endl;
+         cout<<event->x()<<"  "<<event->y()<<" "<<myTimer.elapsed()<<endl;
      }
 
  }
@@ -82,7 +84,7 @@ using namespace std;
      lastPoint = endPoint;
      if(lastPoint!=temp)
      {
-         cout<<"Moving "<<lastPoint.x() <<" "<<lastPoint.y()<<endl;
+         cout<<"Moving "<<lastPoint.x() <<" "<<lastPoint.y()<<" "<<myTimer.elapsed()<<endl;
      }
  }
 

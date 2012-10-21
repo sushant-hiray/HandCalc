@@ -2,15 +2,18 @@
 #define SCRIBBLEAREA_H
 
 #include <QColor>
- #include <QImage>
- #include <QPoint>
- #include <QWidget>
+#include <QImage>
+#include <QPoint>
+#include <QWidget>
+#include <QTime>
+
 
  class ScribbleArea : public QWidget
  {
      Q_OBJECT
 
  public:
+    QTime myTimer;
      ScribbleArea(QWidget *parent = 0);
 
      void setPenColor(const QColor &newColor);
@@ -39,5 +42,6 @@
      QImage image;
      QPoint lastPoint;
      QPoint temp;
+
  };
 #endif // SCRIBBLEAREA_H
