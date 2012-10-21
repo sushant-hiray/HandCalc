@@ -1,3 +1,4 @@
+//handCalc main
 #include <QApplication>
 
 #include "mainWindow.h"
