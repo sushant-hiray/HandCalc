@@ -23,6 +23,9 @@
      QColor penColor() const { return myPenColor; }
      int penWidth() const { return myPenWidth; }
 
+ public slots:
+      void clearImage();
+
 
  protected:
      void mousePressEvent(QMouseEvent *event);

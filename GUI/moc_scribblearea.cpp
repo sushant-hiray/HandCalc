@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'scribblearea.h'
 **
-** Created: Sun Oct 21 02:57:27 2012
+** Created: Sun Oct 21 18:57:07 2012
 **      by: The Qt Meta Object Compiler version 63 (Qt 4.8.1)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -37,7 +37,7 @@ static const uint qt_meta_data_ScribbleArea[] = {
 };
 
 static const char qt_meta_stringdata_ScribbleArea[] = {
-    "ScribbleArea\0\0print()\0"
+    "ScribbleArea\0\0clearImage()\0"
 };
 
 void ScribbleArea::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
@@ -46,7 +46,7 @@ void ScribbleArea::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id
         Q_ASSERT(staticMetaObject.cast(_o));
         ScribbleArea *_t = static_cast<ScribbleArea *>(_o);
         switch (_id) {
-        case 0: _t->print(); break;
+        case 0: _t->clearImage(); break;
         default: ;
         }
     }

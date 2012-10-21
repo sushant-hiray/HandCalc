@@ -69,6 +69,13 @@ using namespace std;
      QWidget::resizeEvent(event);
  }
 
+ void ScribbleArea::clearImage()
+  {
+      image.fill(qRgb(255, 255, 255));
+      modified = true;
+      update();
+  }
+
  void ScribbleArea::drawLineTo(const QPoint &endPoint)
  {
      QPainter painter(&image);

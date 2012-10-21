@@ -1,7 +1,8 @@
-//handCalc main
 #include <QApplication>
 
 #include "mainWindow.h"
+#include "scribblearea.h"
+
 
 int main(int argc, char *argv[])
 {

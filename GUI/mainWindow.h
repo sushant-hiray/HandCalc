@@ -17,14 +17,18 @@
  private slots:
      void penColor();
      void penWidth();
+     void about();
 
  private:
      void createActions();
      void createMenus();
 
       QMenu *optionMenu;
+      QMenu *helpMenu;
       QAction *penColorAct;
       QAction *penWidthAct;
+      QAction *clearScreenAct;
+      QAction *aboutAct;
 
      ScribbleArea *scribbleArea;
  };
