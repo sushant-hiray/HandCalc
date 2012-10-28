@@ -7,8 +7,7 @@
 #include <QWidget>
 #include <QTime>
 #include <vector>
-#include "stroke.h"
-#include "character.h"
+#include "blackbox.h"
 using namespace std;
 
 
@@ -26,7 +25,7 @@ using namespace std;
      bool isModified() const { return modified; }
      QColor penColor() const { return myPenColor; }
      int penWidth() const { return myPenWidth; }
-     vector<Stroke> getStrokeList();
+     //vector<Stroke> getStrokeList();
      void updateRect();
 
  public slots:
@@ -42,28 +41,19 @@ using namespace std;
      void resizeEvent(QResizeEvent *event);
 
  private:
+     BlackBox BB;
      void drawLineTo(const QPoint &endPoint);
      void resizeImage(QImage *image, const QSize &newSize);
-     vector<Stroke> strokeList;
+     //vector<Stroke> strokeList;
      bool modified;
      bool scribbling;
-     bool strokeChanged;
+    // bool strokeChanged;
      int myPenWidth;
-     int strokeCount;
+     //int strokeCount;
      QColor myPenColor;
      QImage image;
      QPoint lastPoint;
      QPoint temp;
-     //for characterlist
-     vector<Character> characterList;
-     int lastpro; //last stroke passed
-     int currpos; //currpos
-     int yup;
-     int ydown;
-     int judge(int i,int j);// judges whether the two strokes i and j in strokelist belong to same character
-     void charprocess();//judges and if allowed pushes a new character into the characterlist called in mouserelease event
-     //NOTE will miss the last stroke if second last stroke already taken into a character so process the last stroke
-     //take care of this when called evaluate .... if lastpos>curpos then last stroke ok else add last stroke as a character
 
  };
 #endif // SCRIBBLEAREA_H
