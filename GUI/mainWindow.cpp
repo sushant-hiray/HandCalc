@@ -2,9 +2,9 @@
 #include <QMenu>
 #include "mainWindow.h"
 #include "scribblearea.h"
+#include <iostream>
 
-
-
+using namespace std;
  MainWindow::MainWindow()
  {
      scribbleArea = new ScribbleArea;
@@ -14,8 +14,15 @@
 
      setWindowTitle(tr("Scribble"));
      resize(500, 500);
- }
+     QPushButton *button = new QPushButton("Evaluate");
+     button->setFixedWidth(70);
+     button->setFixedHeight(25);
+     QHBoxLayout *layout = new QHBoxLayout;
+     layout->addWidget(button);
+     scribbleArea->setLayout(layout);
+     connect(button,SIGNAL(clicked()),this,SLOT(drawRect()));
 
+ }
  void MainWindow::createMenus()
   {
 
@@ -54,6 +61,11 @@
      QColor newColor = QColorDialog::getColor(scribbleArea->penColor());
      if (newColor.isValid())
          scribbleArea->setPenColor(newColor);
+ }
+
+ void MainWindow::drawRect(){
+     scribbleArea->updateRect();
+
  }
 
  void MainWindow::penWidth()

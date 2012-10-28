@@ -1,5 +1,4 @@
 #include <QApplication>
-
 #include "mainWindow.h"
 #include "scribblearea.h"
 

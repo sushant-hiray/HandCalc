@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'scribblearea.h'
 **
-** Created: Sun Oct 21 18:57:07 2012
+** Created: Sat Oct 27 15:33:18 2012
 **      by: The Qt Meta Object Compiler version 63 (Qt 4.8.1)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -23,7 +23,7 @@ static const uint qt_meta_data_ScribbleArea[] = {
        6,       // revision
        0,       // classname
        0,    0, // classinfo
-       1,   14, // methods
+       2,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -32,12 +32,13 @@ static const uint qt_meta_data_ScribbleArea[] = {
 
  // slots: signature, parameters, type, tag, flags
       14,   13,   13,   13, 0x0a,
+      27,   13,   13,   13, 0x0a,
 
        0        // eod
 };
 
 static const char qt_meta_stringdata_ScribbleArea[] = {
-    "ScribbleArea\0\0clearImage()\0"
+    "ScribbleArea\0\0clearImage()\0print()\0"
 };
 
 void ScribbleArea::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
@@ -47,6 +48,7 @@ void ScribbleArea::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id
         ScribbleArea *_t = static_cast<ScribbleArea *>(_o);
         switch (_id) {
         case 0: _t->clearImage(); break;
+        case 1: _t->print(); break;
         default: ;
         }
     }
@@ -85,9 +87,9 @@ int ScribbleArea::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 1)
+        if (_id < 2)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 1;
+        _id -= 2;
     }
     return _id;
 }

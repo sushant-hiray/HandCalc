@@ -14,11 +14,13 @@
  public:
      MainWindow();
 
+
  private slots:
      void penColor();
      void penWidth();
      void about();
      void credit();
+     void drawRect();
 
  private:
      void createActions();
