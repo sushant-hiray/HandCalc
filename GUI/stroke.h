@@ -36,6 +36,11 @@ public:
     int abs(int a);
     int findOrientation(float delta);
     void printSample();
+    Pt getPoint(int i);
+    int getsize(){
+        return sampled.size();
+    }
+
     void setMinx(int x){
         min_x=x;
     }

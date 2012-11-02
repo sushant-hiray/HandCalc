@@ -28,10 +28,20 @@ void Character::push(Stroke x){
 }
 
 void Character::process_character(){
-/*    float step; //ye path ko segment karega
-    int size = slist.size();
-    for(int i=0 ; i<size ; i++){
-        step = slist[i].getpathlength() * size / SR;
+     int size = slist.size();
+     if(size == 1){
+         for (int i=0;i<slist[0].getsize();i++){
+             sampledChar.push_back(slist[0].getPoint(i));
+         }
+     }
+     else{
+         for(int i=0;i<slist[0].getsize();i=i+2){
+             sampledChar.push_back(slist[0].getPoint(i));
+         }
+         for(int i=0;i<slist[1].getsize();i=i+2){
+             sampledChar.push_back(slist[1].getPoint(i));
+         }
 
-    }*/
+     }
+
 }

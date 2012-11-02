@@ -96,7 +96,6 @@ void Stroke::findnext(Pt &prev,Pt &next,float dist,int &pointer ){
         pointer++;
         if(pointer>=stroke.size()){
             pushsampled(next);
-            cout<<"pointer "<<pointer<<endl;
             return;
         }
         newpoint.x=stroke[pointer].x;
@@ -111,26 +110,26 @@ void Stroke::pushsampled(Pt a){
 }
 
 void Stroke::sampleStroke(){
-   // cout<<"pathlength is "<<pathlength<<endl;
     float step=pathlength/SR;
-    //float currlen=0;
-    //int prevx,prevy,
     int pointer=0;
     Pt prev,next;
     prev.x=stroke[0].x; prev.y = stroke[0].y;
     next.x=stroke[1].x; next.y = stroke[1].y;
     sampled.push_back(prev);
     for(int i=1;i<SR; i++){
-        //int prevx=stroke[pointer].x; int prevy=stroke[pointer].y;
         next.x=stroke[pointer].x;next.y=stroke[pointer].y;
         findnext(prev,next,step,pointer);
     }
 
-    cout<<"end pointr is "<<pointer<<endl;
+
 }
 
 void Stroke::printSample(){
     for (int i=0;i<sampled.size();i++){
         cout<<"sampl no: "<<i<<" x is "<<sampled[i].x<<" y is "<<sampled[i].y<<endl;
     }
+}
+
+Pt Stroke::getPoint(int i){
+    return sampled[i];
 }

@@ -74,14 +74,17 @@ void BlackBox::charprocess(){
         Character temp;
         temp.push(strokeList[lastpro]);
         temp.push(strokeList[currpos]);
+        temp.process_character();
         lastpro=currpos+1;
         characterList.push_back(temp);
+
     }
 
     else if(result==2) { //make lastpro a character and move lastpro pointr to currpos
         //cout<<"########   into res 2  "<<strokeList[lastpro].getid()<<endl;
         Character temp;
         temp.push(strokeList[lastpro]);
+        temp.process_character();
          characterList.push_back(temp);
          //cout<<"printing the first character "<<characterList.size()<<"  ";characterList[0].print();cout<<endl;
 
@@ -115,7 +118,6 @@ void BlackBox::lastCase(){
          cout<<"\nNumber of strokes identified "<<strokeList.size()<<endl;
          //@@@
          out.close();
-         strokeList[0].printSample();
 
 }
 

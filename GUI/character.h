@@ -29,6 +29,7 @@ public:
 
 private:
     vector<Stroke> slist;
+    vector<Pt> sampledChar;
     int minx;
     int miny;
     int maxx;
