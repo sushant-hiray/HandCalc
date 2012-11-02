@@ -26,3 +26,12 @@ void Character::push(Stroke x){
     }
     slist.push_back(x);
 }
+
+void Character::process_character(){
+/*    float step; //ye path ko segment karega
+    int size = slist.size();
+    for(int i=0 ; i<size ; i++){
+        step = slist[i].getpathlength() * size / SR;
+
+    }*/
+}

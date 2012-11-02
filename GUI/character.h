@@ -3,6 +3,7 @@
 #include "stroke.h"
 #include <vector>
 #include <iostream>
+#include "constants.h"
 using namespace std;
 class Character
 {
@@ -24,6 +25,7 @@ public:
         return maxy;
     }
     //void setbox(int x1,int x2,int y1,int y2);
+    void process_character();
 
 private:
     vector<Stroke> slist;

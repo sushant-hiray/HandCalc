@@ -6,6 +6,7 @@
 using namespace std;
 Stroke::Stroke(int id){
     strokeid=id;
+    pathlength=0;
 }
 
 void Stroke::updateStroke(){
@@ -75,4 +76,49 @@ int Stroke::findOrientation(float delta){
         return 2;
     }
 
+}
+
+float Stroke::distance(Pt a,Pt b){
+    return sqrt(pow(b.x-a.x,2)+pow(b.y-a.y,2));
+}
+
+void Stroke::findnext(Pt &prev,Pt &next,float dist,int &pointer ){
+    float tempdist=distance(next,prev);
+    Pt newpoint;
+    if(tempdist>dist){
+        newpoint.x= (prev.x*(tempdist-dist) + next.x*dist)/tempdist;
+        newpoint.y= (prev.y*(tempdist-dist) + next.y*dist)/tempdist;
+        pushsampled(newpoint);
+        prev=newpoint;
+        return;
+    }
+    else{
+        pointer++;
+        if(pointer>=stroke.size()){
+            pushsampled(next);
+            return;
+        }
+        newpoint.x=stroke[pointer].x;
+        newpoint.y=stroke[pointer].y;
+            findnext(next,newpoint,tempdist-dist,pointer);
+    }
+}
+
+void Stroke::pushsampled(Pt a){
+    sampled.push_back(a);
+}
+
+void Stroke::sampleStroke(){
+    float step=pathlength/SR;
+    //float currlen=0;
+    //int prevx,prevy,
+    int pointer=0;
+    Pt prev,next;
+    prev.x=stroke[0].x; prev.y = stroke[0].y;
+    next.x=stroke[1].y; next.y = stroke[1].y;
+    for(int i=0;i<SR; i++){
+        //int prevx=stroke[pointer].x; int prevy=stroke[pointer].y;
+        next.x=stroke[pointer].x;next.y=stroke[pointer].y;
+        findnext(prev,next,step,pointer);
+    }
 }

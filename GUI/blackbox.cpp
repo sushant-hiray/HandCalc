@@ -1,4 +1,5 @@
 #include "blackbox.h"
+#include <cmath>
 
 BlackBox::BlackBox()
 {
@@ -23,19 +24,28 @@ void BlackBox::pushStrokePoint(int x, int y, long t){
         if(y>ydown) ydown=y;
         strokeChanged=false;
         strokeCount++;
+        prevx=x;prevy=y;
         out<<".\n";
         strokeList.push_back(Stroke(strokeCount));
         strokeList[strokeCount].push(x,y,t);
     }
-    else  strokeList[strokeCount].push(x,y,t);
+    else  {
+        strokeList[strokeCount].push(x,y,t);
+        strokeList[strokeCount].addtopath(sqrt(pow(x-prevx , 2) + pow(y-prevy,2)));
+        prevx=x;prevy=y;
+    }
 
     out<<x<<","<<y<<endl;
 }
 
 void BlackBox::setStrokeChange(){
+    if(strokeCount >= 0){
+        cout<< "path length of stroke is" <<strokeList[strokeCount].getpathlength() << endl;
+    }
     strokeChanged=true;
     //@@@
     strokeList[strokeCount].updateStroke();
+    strokeList[strokeCount].sampleStroke();
     currpos=strokeCount; //cout<<"strokecoutn is............................."<<strokeCount<<endl;
     charprocess();
     //---@@@

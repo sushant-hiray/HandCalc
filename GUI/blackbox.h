@@ -15,6 +15,7 @@ private:
     bool strokeChanged;
     int strokeCount;
     ofstream out;
+    int prevx,prevy;
 
 
     //for characterlist
