@@ -35,6 +35,7 @@ public:
     float distance(Pt,Pt);
     int abs(int a);
     int findOrientation(float delta);
+    void printSample();
     void setMinx(int x){
         min_x=x;
     }

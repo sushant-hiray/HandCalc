@@ -115,6 +115,7 @@ void BlackBox::lastCase(){
          cout<<"\nNumber of strokes identified "<<strokeList.size()<<endl;
          //@@@
          out.close();
+         strokeList[0].printSample();
 
 }
 
