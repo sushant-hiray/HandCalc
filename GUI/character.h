@@ -4,6 +4,8 @@
 #include <vector>
 #include <iostream>
 #include "constants.h"
+#include <cstring>
+#include <cmath>
 using namespace std;
 class Character
 {
@@ -13,6 +15,7 @@ public:
     int getno(); //returns no of strokes in that character
     void print(); //print the stroke in form (3,4)
     void ScaleCharacter();
+    string preprocessing();
     int getMinx(){
         return minx;
     }

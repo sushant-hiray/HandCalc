@@ -36,7 +36,7 @@ public:
     void findnext(Pt &prev,Pt &next,float dist,int &pointer );
     float distance(Pt,Pt);
     int abs(int a);
-    int findOrientation(float delta);
+    int findOrientation(float delt);
     void printSample();
     Pt getPoint(int i);
     int getsize(){

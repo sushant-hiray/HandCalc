@@ -119,6 +119,11 @@ void BlackBox::lastCase(){
 
          cout<<"\nNumber of strokes identified "<<strokeList.size()<<endl;
          //@@@
+
+         cout<< "info about primary preprocessing ";
+         for (int i=0;i<characterList.size();i++)
+            cout<< characterList[i].preprocessing()<<endl;
+
          out.close();
 
 }

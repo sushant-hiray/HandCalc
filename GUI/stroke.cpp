@@ -32,7 +32,7 @@ void Stroke::updateStroke(){
     min_y=tempminy;
     max_x=tempmaxx;
     max_y=tempmaxy;
-    orientation=findOrientation(0.37);
+    orientation=findOrientation(Delta);
     cout<<"Minimum x is "<<min_x<<endl;
     cout<<"Maximum x is "<<max_x<<endl;
     cout<<"Minimum y is "<<min_y<<endl;
@@ -63,7 +63,7 @@ void Stroke::updateSampleStroke(){
     min_y=tempminy;
     max_x=tempmaxx;
     max_y=tempmaxy;
-    orientation=findOrientation(0.37);
+    orientation=findOrientation(Delta);
     if(orientation==0){
         if(sampled[0].x < sampled[sampled.size()-1].x){
             directionflag=1;
