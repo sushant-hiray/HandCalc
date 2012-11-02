@@ -29,6 +29,7 @@ private:
 public:
     Stroke(int id);
     void updateStroke();
+    void updateSampleStroke();
     void push(int x,int y,int time);
     void pushsampled(Pt x);
     void findnext(Pt &prev,Pt &next,float dist,int &pointer );

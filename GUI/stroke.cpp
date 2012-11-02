@@ -40,6 +40,37 @@ void Stroke::updateStroke(){
     cout<<"Orientation is "<<orientation<<endl;
 }
 
+void Stroke::updateSampleStroke(){
+    int tempminx=sampled[0].x;
+    int tempminy=sampled[0].y;
+    int tempmaxx=sampled[0].x;
+    int tempmaxy=sampled[0].y;
+    for (unsigned int i=1;i<sampled.size();i++){
+        if(sampled[i].x < tempminx){
+            tempminx=sampled[i].x;
+        }
+        if(sampled[i].y < tempminy){
+            tempminy=sampled[i].y;
+        }
+        if(sampled[i].x > tempmaxx){
+            tempmaxx=sampled[i].x;
+        }
+        if(sampled[i].y > tempmaxy){
+            tempmaxy=sampled[i].y;
+        }
+    }
+    min_x=tempminx;
+    min_y=tempminy;
+    max_x=tempmaxx;
+    max_y=tempmaxy;
+    orientation=findOrientation(0.37);
+    cout<<"Minimum x is "<<min_x<<endl;
+    cout<<"Maximum x is "<<max_x<<endl;
+    cout<<"Minimum y is "<<min_y<<endl;
+    cout<<"Maximum y is "<<max_y<<endl;
+    cout<<"Orientation is "<<orientation<<endl;
+}
+
 void Stroke::push(int x, int y, int time){
     Point temp;
     temp.x=x;
@@ -110,7 +141,7 @@ void Stroke::pushsampled(Pt a){
 }
 
 void Stroke::sampleStroke(){
-    float step=pathlength/SR;
+    float step=pathlength/(SR - 1);
     int pointer=0;
     Pt prev,next;
     prev.x=stroke[0].x; prev.y = stroke[0].y;

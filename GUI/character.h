@@ -12,6 +12,7 @@ public:
     void push(Stroke x);//pushes the stroke into the list
     int getno(); //returns no of strokes in that character
     void print(); //print the stroke in form (3,4)
+    void ScaleCharacter();
     int getMinx(){
         return minx;
     }
@@ -26,6 +27,7 @@ public:
     }
     //void setbox(int x1,int x2,int y1,int y2);
     void process_character();
+    void printScaledSample();
 
 private:
     vector<Stroke> slist;

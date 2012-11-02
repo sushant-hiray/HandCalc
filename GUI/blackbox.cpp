@@ -44,8 +44,9 @@ void BlackBox::setStrokeChange(){
     }
     strokeChanged=true;
     //@@@
-    strokeList[strokeCount].updateStroke();
+    //strokeList[strokeCount].updateStroke();
     strokeList[strokeCount].sampleStroke();
+    strokeList[strokeCount].updateSampleStroke();
     currpos=strokeCount; //cout<<"strokecoutn is............................."<<strokeCount<<endl;
     charprocess();
     //---@@@
@@ -105,6 +106,7 @@ void BlackBox::lastCase(){
          else{
              Character temp;
              temp.push(strokeList[strokeList.size()-1]);
+             temp.process_character();
              characterList.push_back(temp);
          }
          //---@@@ END CASE HANDLED

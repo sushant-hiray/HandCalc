@@ -33,6 +33,7 @@ void Character::process_character(){
          for (int i=0;i<slist[0].getsize();i++){
              sampledChar.push_back(slist[0].getPoint(i));
          }
+         ScaleCharacter();
      }
      else{
          for(int i=0;i<slist[0].getsize();i=i+2){
@@ -41,7 +42,33 @@ void Character::process_character(){
          for(int i=0;i<slist[1].getsize();i=i+2){
              sampledChar.push_back(slist[1].getPoint(i));
          }
+         ScaleCharacter();
+
 
      }
 
+}
+
+void Character::ScaleCharacter(){
+    float length=maxx-minx;
+    float width=maxy-miny;
+    float ratio;
+    if(length > width){
+        ratio=1/length;
+    }
+    else{
+        ratio=1/width;
+    }
+    for(int i=0;i<sampledChar.size();i++){
+        sampledChar[i].x = (sampledChar[i].x - minx)*ratio;
+        sampledChar[i].y = (sampledChar[i].y - miny)*ratio;
+
+    }
+    printScaledSample();
+}
+
+void Character::printScaledSample(){
+    for(int i=0;i<sampledChar.size();i++){
+        cout<<"( "<<sampledChar[i].x<<" , "<<sampledChar[i].y<<" )"<<endl;
+    }
 }
