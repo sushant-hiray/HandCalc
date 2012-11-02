@@ -25,6 +25,7 @@ private:
     int max_y;
     int orientation; //0-horizontal,1-vertical,2-diagonal,3-closed
     float pathlength;
+    int directionflag;  //1- correct direction 0-reverse direction
 
 public:
     Stroke(int id);

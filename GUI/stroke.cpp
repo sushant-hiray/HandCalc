@@ -64,11 +64,45 @@ void Stroke::updateSampleStroke(){
     max_x=tempmaxx;
     max_y=tempmaxy;
     orientation=findOrientation(0.37);
+    if(orientation==0){
+        if(sampled[0].x < sampled[sampled.size()-1].x){
+            directionflag=1;
+        }
+        else{
+            directionflag=0;
+        }
+    }
+    if(orientation==1){
+        if(sampled[0].y < sampled[sampled.size()-1].y){
+            directionflag=1;
+        }
+        else{
+            directionflag=0;
+        }
+    }
+    if(orientation==2){
+        if(sampled[0].x < sampled[sampled.size()-1].x){
+            directionflag=1;
+        }
+        else{
+            directionflag=0;
+        }
+    }
+    if(orientation==3){
+        if(sampled[0].x < sampled[sampled.size()-1].x){
+            directionflag=1;
+        }
+        else{
+            directionflag=0;
+        }
+    }
+
     cout<<"Minimum x is "<<min_x<<endl;
     cout<<"Maximum x is "<<max_x<<endl;
     cout<<"Minimum y is "<<min_y<<endl;
     cout<<"Maximum y is "<<max_y<<endl;
     cout<<"Orientation is "<<orientation<<endl;
+    cout<<"Direction is "<<directionflag<<endl;
 }
 
 void Stroke::push(int x, int y, int time){
@@ -89,9 +123,16 @@ int Stroke::abs(int a){
 }
 
 int Stroke::findOrientation(float delta){
-    int tempx=abs(stroke[0].x-stroke[stroke.size()-1].x);
-    int tempy=abs(stroke[0].y-stroke[stroke.size()-1].y);
-    float diagonal=sqrt((max_x-min_x)^2 + (max_y-min_y)^2);
+    int tempx=abs(sampled[0].x-sampled[sampled.size()-1].x);
+    int tempy=abs(sampled[0].y-sampled[sampled.size()-1].y);
+    float diagonal=sqrt(pow(max_x-min_x,2) + pow(max_y-min_y,2));
+    cout<<"first point is "<<sampled[0].x<<" , "<<sampled[0].y<<endl;
+    cout<<"final point is "<<sampled[sampled.size()-1].x<<" , "<<sampled[sampled.size()-1].y<<endl;
+    cout<<"Minimum x? is "<<min_x<<endl;
+    cout<<"Maximum x? is "<<max_x<<endl;
+    cout<<"Minimum y? is "<<min_y<<endl;
+    cout<<"Maximum y? is "<<max_y<<endl;
+    cout<<"diagonal is "<<diagonal<<endl;
     float checkx=tempx/diagonal;
     float checky=tempy/diagonal;
     if(checkx > delta && checky < delta ){
@@ -151,6 +192,8 @@ void Stroke::sampleStroke(){
         next.x=stroke[pointer].x;next.y=stroke[pointer].y;
         findnext(prev,next,step,pointer);
     }
+    cout<<"sampled first point is "<<sampled[0].x<<" , "<<sampled[0].y<<endl;
+    cout<<"sampled last point is "<<sampled[sampled.size()-1].x<<" , "<<sampled[sampled.size()-1].y<<endl;
 
 
 }
