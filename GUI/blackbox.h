@@ -4,18 +4,24 @@
 #include "character.h"
 #include <vector>
 #include <fstream>
+#include <unordered_map>
+#include <QString>
+#include <utility>
 class BlackBox
 {
 
 private:
     vector<Stroke> strokeList;
     vector<Character> characterList;
+    unordered_multimap<string,string> trainingData;
     //bool modified;
     //bool scribbling;
     bool strokeChanged;
     int strokeCount;
     ofstream out;
     int prevx,prevy;
+    string key;
+
 
 
     //for characterlist
@@ -34,6 +40,8 @@ public:
     //@@@strokes
     void pushStrokePoint(int x,int y, long int t);
     void lastCase();
+    void TrainingProgram();       //left to be written
+    void changeKey(string text);
     int cgetMinx(int i);
     int cgetMiny(int i);
     int cgetMaxx(int i);
@@ -42,6 +50,7 @@ public:
         return characterList.size();
     }
     void setStrokeChange();
+    void ResetData();
 
 };
 

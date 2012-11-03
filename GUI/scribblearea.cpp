@@ -80,6 +80,7 @@ using namespace std;
       image.fill(qRgb(255, 255, 255));
       modified = true;
       update();
+
   }
 
  void ScribbleArea::print(){
@@ -112,7 +113,35 @@ using namespace std;
 
 
      QPainter painter(&image);
-     cout<<"hella !!!!!!!\n";
+
+     /*
+     for(int i=0;i < strokeList.size();i++){
+         painter.drawRect(strokeList[i].getMinx(),strokeList[i].getMiny(),strokeList[i].getMaxx() - strokeList[i].getMinx(),strokeList[i].getMaxy()-strokeList[i].getMiny());
+
+     }
+     */
+     for(int i=0;i < BB.csize();i++){
+
+         painter.drawRect(BB.cgetMinx(i),BB.cgetMiny(i),BB.cgetMaxx(i) - BB.cgetMinx(i),BB.cgetMaxy(i)-BB.cgetMiny(i));
+
+
+     }
+
+     update();
+
+ }
+
+ void ScribbleArea::addTrainingData(QString Text){
+
+     char str[100];
+     strcpy(str, Text.toAscii().data());
+     string s;
+     s=str[0];
+     BB.changeKey(s);
+     BB.TrainingProgram();
+
+
+     QPainter painter(&image);
 
      /*
      for(int i=0;i < strokeList.size();i++){
@@ -128,6 +157,7 @@ using namespace std;
      update();
 
  }
+
 
  void ScribbleArea::resizeImage(QImage *image, const QSize &newSize)
  {

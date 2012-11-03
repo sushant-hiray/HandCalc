@@ -4,6 +4,7 @@
 
 #include <QList>
  #include <QMainWindow>
+#include <QLineEdit>
 
  class ScribbleArea;
 
@@ -21,11 +22,13 @@
      void about();
      void credit();
      void drawRect();
+     void addTrainingData();
+     void Reset();
 
  private:
      void createActions();
      void createMenus();
-
+      int resetflag;
       QMenu *optionMenu;
       QMenu *helpMenu;
       QAction *penColorAct;
@@ -34,6 +37,7 @@
       QAction *aboutAct;
       QAction *creditsAct;
 
+     QLineEdit *traininginput ;
      ScribbleArea *scribbleArea;
  };
 #endif // MAINWINDOW_H

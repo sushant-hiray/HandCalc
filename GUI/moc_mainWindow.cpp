@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'mainWindow.h'
 **
-** Created: Fri Nov 2 02:19:45 2012
+** Created: Sat Nov 3 14:12:11 2012
 **      by: The Qt Meta Object Compiler version 63 (Qt 4.8.1)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -23,7 +23,7 @@ static const uint qt_meta_data_MainWindow[] = {
        6,       // revision
        0,       // classname
        0,    0, // classinfo
-       5,   14, // methods
+       7,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -36,6 +36,8 @@ static const uint qt_meta_data_MainWindow[] = {
       34,   11,   11,   11, 0x08,
       42,   11,   11,   11, 0x08,
       51,   11,   11,   11, 0x08,
+      62,   11,   11,   11, 0x08,
+      80,   11,   11,   11, 0x08,
 
        0        // eod
 };
@@ -43,6 +45,7 @@ static const uint qt_meta_data_MainWindow[] = {
 static const char qt_meta_stringdata_MainWindow[] = {
     "MainWindow\0\0penColor()\0penWidth()\0"
     "about()\0credit()\0drawRect()\0"
+    "addTrainingData()\0Reset()\0"
 };
 
 void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
@@ -56,6 +59,8 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         case 2: _t->about(); break;
         case 3: _t->credit(); break;
         case 4: _t->drawRect(); break;
+        case 5: _t->addTrainingData(); break;
+        case 6: _t->Reset(); break;
         default: ;
         }
     }
@@ -94,9 +99,9 @@ int MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 5)
+        if (_id < 7)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 5;
+        _id -= 7;
     }
     return _id;
 }

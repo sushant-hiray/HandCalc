@@ -111,8 +111,8 @@ void BlackBox::lastCase(){
          }
          //---@@@ END CASE HANDLED
 
-         strokeList[strokeList.size()-1].updateStroke();
-         cout<<"Hello.....now printing about characters formed \n no of characters ="<< characterList.size();
+         //strokeList[strokeList.size()-1].updateSampleStroke();
+         cout<<"Printing characters formed \n no of characters ="<< characterList.size();
          for(int i=0;i<characterList.size();i++){
              characterList[i].print();
          }
@@ -126,6 +126,56 @@ void BlackBox::lastCase(){
 
          out.close();
 
+}
+
+void BlackBox::changeKey(string text){
+    key=text;
+}
+
+void BlackBox::TrainingProgram(){
+    if(lastpro>currpos) ;//cout<<"WE are done ^^^^^^^^^^^^^^^^^^^^^^^^\n";//we are done as last go coupled with sec-last
+         else{
+             Character temp;
+             temp.push(strokeList[strokeList.size()-1]);
+             temp.process_character();
+             characterList.push_back(temp);
+         }
+         //---@@@ END CASE HANDLED
+
+         //strokeList[strokeList.size()-1].updateSampleStroke();
+         cout<<"Hello.....now printing about characters formed \n no of characters ="<< characterList.size();
+         for(int i=0;i<characterList.size();i++){
+             characterList[i].print();
+         }
+
+         cout<<"\nNumber of strokes identified "<<strokeList.size()<<endl;
+         //@@@
+
+         cout<< "info about primary preprocessing ";
+         string reference;
+         reference=characterList[0].preprocessing();
+         trainingData.insert(make_pair(reference,key));
+         cout<<"Inserted new Training Data for "<<reference<<" with reference value "<<key<<endl;
+
+         ResetData();
+         out.close();
+
+
+}
+
+void BlackBox::ResetData(){
+    strokeList.erase(strokeList.begin());
+    characterList.erase(characterList.begin());
+    strokeChanged = true;
+    strokeCount =-1;
+ //@@@   for characterlist
+    lastpro=0;
+    currpos=0;
+    yup=10000;
+    ydown=0;
+    //---@@@
+
+    out.open("strokes.txt");
 }
 
 int BlackBox::cgetMinx(int i){

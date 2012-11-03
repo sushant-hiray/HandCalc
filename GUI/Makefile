@@ -229,12 +229,12 @@ blackbox.o: blackbox.cpp blackbox.h \
 		stroke.h \
 		character.h \
 		constants.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o blackbox.o blackbox.cpp
+	$(CXX) -c -std=c++0x $(CXXFLAGS) $(INCPATH) -o blackbox.o blackbox.cpp
 
 character.o: character.cpp character.h \
 		stroke.h \
 		constants.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o character.o character.cpp
+	$(CXX) -c -std=c++0x $(CXXFLAGS) $(INCPATH) -o character.o character.cpp
 
 main.o: main.cpp mainWindow.h \
 		scribblearea.h \
@@ -242,7 +242,7 @@ main.o: main.cpp mainWindow.h \
 		stroke.h \
 		character.h \
 		constants.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o main.cpp
+	$(CXX) -c -std=c++0x $(CXXFLAGS) $(INCPATH) -o main.o main.cpp
 
 mainWindow.o: mainWindow.cpp mainWindow.h \
 		scribblearea.h \
@@ -250,23 +250,23 @@ mainWindow.o: mainWindow.cpp mainWindow.h \
 		stroke.h \
 		character.h \
 		constants.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainWindow.o mainWindow.cpp
+	$(CXX) -c  -std=c++0x $(CXXFLAGS) $(INCPATH) -o mainWindow.o mainWindow.cpp
 
 scribblearea.o: scribblearea.cpp scribblearea.h \
 		blackbox.h \
 		stroke.h \
 		character.h \
 		constants.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o scribblearea.o scribblearea.cpp
+	$(CXX) -c -std=c++0x $(CXXFLAGS) $(INCPATH) -o scribblearea.o scribblearea.cpp
 
 stroke.o: stroke.cpp stroke.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o stroke.o stroke.cpp
+	$(CXX) -c -std=c++0x $(CXXFLAGS) $(INCPATH) -o stroke.o stroke.cpp
 
 moc_mainWindow.o: moc_mainWindow.cpp 
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_mainWindow.o moc_mainWindow.cpp
+	$(CXX) -c -std=c++0x  $(CXXFLAGS) $(INCPATH) -o moc_mainWindow.o moc_mainWindow.cpp
 
 moc_scribblearea.o: moc_scribblearea.cpp 
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_scribblearea.o moc_scribblearea.cpp
+	$(CXX) -c -std=c++0x $(CXXFLAGS) $(INCPATH) -o moc_scribblearea.o moc_scribblearea.cpp
 
 ####### Install
 

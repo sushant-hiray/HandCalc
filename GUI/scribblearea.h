@@ -27,6 +27,7 @@ using namespace std;
      int penWidth() const { return myPenWidth; }
      //vector<Stroke> getStrokeList();
      void updateRect();
+     void addTrainingData(QString text);
 
  public slots:
       void clearImage();

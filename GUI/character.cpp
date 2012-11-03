@@ -64,11 +64,10 @@ void Character::ScaleCharacter(){
         sampledChar[i].y = (sampledChar[i].y - miny)*ratio;
 
     }
-    maxx=maxx*ratio;
-    maxy=maxy*ratio;
-    minx=minx*ratio;
-    miny=miny*ratio;
-    printScaledSample();
+    orgmaxx=maxx;maxx=maxx*ratio;
+    orgmaxy=maxy;maxy=maxy*ratio;
+    orgminx=minx;minx=minx*ratio;
+    orgminy=miny;miny=miny*ratio;
 }
 
 void Character::printScaledSample(){

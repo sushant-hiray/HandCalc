@@ -128,10 +128,6 @@ int Stroke::findOrientation(float delta){
     float diagonal=sqrt(pow(max_x-min_x,2) + pow(max_y-min_y,2));
     cout<<"first point is "<<sampled[0].x<<" , "<<sampled[0].y<<endl;
     cout<<"final point is "<<sampled[sampled.size()-1].x<<" , "<<sampled[sampled.size()-1].y<<endl;
-    cout<<"Minimum x? is "<<min_x<<endl;
-    cout<<"Maximum x? is "<<max_x<<endl;
-    cout<<"Minimum y? is "<<min_y<<endl;
-    cout<<"Maximum y? is "<<max_y<<endl;
     cout<<"diagonal is "<<diagonal<<endl;
     float checkx=tempx/diagonal;
     float checky=tempy/diagonal;

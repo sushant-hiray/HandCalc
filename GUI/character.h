@@ -17,16 +17,16 @@ public:
     void ScaleCharacter();
     string preprocessing();
     int getMinx(){
-        return minx;
+        return orgminx;
     }
     int getMiny(){
-        return miny;
+        return orgminy;
     }
     int getMaxx(){
-        return maxx;
+        return orgmaxx;
     }
     int getMaxy(){
-        return maxy;
+        return orgmaxy;
     }
     //void setbox(int x1,int x2,int y1,int y2);
     void process_character();
@@ -39,6 +39,10 @@ private:
     int miny;
     int maxx;
     int maxy;
+    int orgminx;
+    int orgminy;
+    int orgmaxx;
+    int orgmaxy;
 };
 
 #endif // CHARACTER_H

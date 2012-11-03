@@ -11,16 +11,29 @@ using namespace std;
      setCentralWidget(scribbleArea);
      createActions();
      createMenus();
+     resetflag=0;
 
      setWindowTitle(tr("Scribble"));
      resize(500, 500);
      QPushButton *button = new QPushButton("Evaluate");
      button->setFixedWidth(70);
      button->setFixedHeight(25);
+     QPushButton *button2 = new QPushButton("Train Data");
+     button2->setFixedWidth(80);
+     button2->setFixedHeight(25);
+     QPushButton *button3 = new QPushButton("Reset");
+     button->setFixedWidth(70);
+     button->setFixedHeight(25);
      QHBoxLayout *layout = new QHBoxLayout;
      layout->addWidget(button);
+     layout->addWidget(button2);
+     layout->addWidget(button3);
+     traininginput = new QLineEdit;
+     layout->addWidget(traininginput);
      scribbleArea->setLayout(layout);
      connect(button,SIGNAL(clicked()),this,SLOT(drawRect()));
+     connect(button2,SIGNAL(clicked()),this,SLOT(addTrainingData()));
+     connect(button3,SIGNAL(clicked()),this,SLOT(Reset()));
 
  }
  void MainWindow::createMenus()
@@ -68,6 +81,17 @@ using namespace std;
 
  }
 
+ void MainWindow::addTrainingData(){
+     if(resetflag==0){
+        scribbleArea->addTrainingData(traininginput->text());
+        resetflag=1;
+     }
+     else{
+         return;
+     }
+ }
+
+
  void MainWindow::penWidth()
  {
      bool ok;
@@ -105,4 +129,9 @@ using namespace std;
                 "We are also available for being hired!! :P </p>"
                 ));
      msgBox.exec();
+ }
+
+ void MainWindow::Reset(){
+     scribbleArea->clearImage();
+     resetflag=0;
  }
