@@ -1,5 +1,5 @@
-#ifndef BLACKBOX_H
-#define BLACKBOX_H
+#ifndef SPLICE_H
+#define SPLICE_H
 #include "stroke.h"
 #include "character.h"
 #include"constants.h"
@@ -9,7 +9,7 @@
 #include<map>
 #include <QString>
 #include <utility>
-class BlackBox
+class Splice
 {
 
 private:
@@ -39,7 +39,7 @@ private:
     //take care of this when called evaluate .... if lastpos>curpos then last stroke ok else add last stroke as a character
 
 public:
-    BlackBox();
+    Splice();
     //@@@strokes
     void pushStrokePoint(int x,int y, long int t);
     void lastCase();
@@ -59,4 +59,4 @@ public:
 
 };
 
-#endif // BLACKBOX_H
+#endif // SPLICE_H

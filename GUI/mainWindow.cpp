@@ -25,7 +25,7 @@ using namespace std;
      button3->setFixedWidth(70);
      button3->setFixedHeight(25);
      QPushButton *finish = new QPushButton("Finish Training");
-     finish->setFixedWidth(70);
+     finish->setFixedWidth(110);
      finish->setFixedHeight(25);
      QHBoxLayout *layout = new QHBoxLayout;
      layout->addWidget(button);

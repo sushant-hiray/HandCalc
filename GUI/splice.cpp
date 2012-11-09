@@ -1,7 +1,7 @@
-#include "blackbox.h"
+#include "splice.h"
 #include <cmath>
 
-BlackBox::BlackBox()
+Splice::Splice()
 {
     //scribbling = false;
     strokeChanged = true;
@@ -34,7 +34,7 @@ BlackBox::BlackBox()
 
 }
 
-void BlackBox::pushStrokePoint(int x, int y, long t){
+void Splice::pushStrokePoint(int x, int y, long t){
     if(strokeChanged==true){
         if(y<yup) yup=y;
         if(y>ydown) ydown=y;
@@ -54,7 +54,7 @@ void BlackBox::pushStrokePoint(int x, int y, long t){
     out<<x<<","<<y<<endl;
 }
 
-void BlackBox::setStrokeChange(){
+void Splice::setStrokeChange(){
     if(strokeCount >= 0){
         cout<< "path length of stroke is" <<strokeList[strokeCount].getpathlength() << endl;
     }
@@ -70,7 +70,7 @@ void BlackBox::setStrokeChange(){
 
 
 //@@@
-int BlackBox::judge(int i,int j){
+int Splice::judge(int i,int j){
      float delta=(ydown-yup)*(0.1);
      //cout<<"DELATA............"<<delta<<" "<<ydown<< " "<<yup<<"  VV.."<<i<<" "<<j<<strokeList[j].getMinx()<<" "<<strokeList[i].getMaxx()<<endl;
      if (delta < strokeList[i].getMinx()-strokeList[j].getMaxx()){
@@ -83,7 +83,7 @@ int BlackBox::judge(int i,int j){
      else return 0; //means they belong to same character
  }
 
-void BlackBox::charprocess(){
+void Splice::charprocess(){
     //cout<<"processing now................"<<lastpro<< "    "<<currpos;
     int result=judge(lastpro,currpos);
     if(lastpro==currpos); //do nothing because only one stroke in hand so wait for next stroke
@@ -117,7 +117,7 @@ void BlackBox::charprocess(){
     }
 }
 
-void BlackBox::lastCase(){
+void Splice::lastCase(){
     if(lastpro>currpos) ;//cout<<"WE are done ^^^^^^^^^^^^^^^^^^^^^^^^\n";//we are done as last go coupled with sec-last
          else{
              Character temp;
@@ -144,11 +144,11 @@ void BlackBox::lastCase(){
 
 }
 
-void BlackBox::changeKey(string text){
+void Splice::changeKey(string text){
     key=text;
 }
 
-void BlackBox::TrainingProgram(){
+void Splice::TrainingProgram(){
     if(lastpro>currpos) ;//cout<<"WE are done ^^^^^^^^^^^^^^^^^^^^^^^^\n";//we are done as last go coupled with sec-last
          else{
              Character temp;
@@ -179,7 +179,7 @@ void BlackBox::TrainingProgram(){
          out.close();
 }
 
-void BlackBox::writeMap(){
+void Splice::writeMap(){
     ofstream DataBase("DataBase.txt");
     for(list<string>::iterator i=Keys.begin();i!=Keys.end();i++){
         int count = trainingData.count(*i);
@@ -194,7 +194,7 @@ void BlackBox::writeMap(){
 
 }
 
-void BlackBox::ResetData(){
+void Splice::ResetData(){
     strokeList.erase(strokeList.begin());
     characterList.erase(characterList.begin());
     strokeChanged = true;
@@ -209,20 +209,20 @@ void BlackBox::ResetData(){
     out.open("strokes.txt");
 }
 
-int BlackBox::cgetMinx(int i){
+int Splice::cgetMinx(int i){
     return characterList[i].getMinx();
 }
-int BlackBox::cgetMiny(int i){
+int Splice::cgetMiny(int i){
     return characterList[i].getMiny();
 }
-int BlackBox::cgetMaxx(int i){
+int Splice::cgetMaxx(int i){
     return characterList[i].getMaxx();
 }
-int BlackBox::cgetMaxy(int i){
+int Splice::cgetMaxy(int i){
     return characterList[i].getMaxy();
 }
 
-void BlackBox::printfeature(feature &f, ofstream &out){
+void Splice::printfeature(feature &f, ofstream &out){
     out<<"\t"<<f.id <<":\n";
     for(int i=0;i<f.vec.size();i++){
         out<<"\t\t("<<f.vec[i].x <<","<<f.vec[i].y<<")"<<endl;

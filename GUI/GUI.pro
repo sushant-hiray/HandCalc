@@ -8,11 +8,13 @@ DEPENDPATH += .
 INCLUDEPATH += .
 
 # Input
-HEADERS += blackbox.h character.h mainWindow.h scribblearea.h stroke.h \
-    constants.h
-SOURCES += blackbox.cpp \
+HEADERS += character.h mainWindow.h scribblearea.h stroke.h \
+    constants.h \
+    splice.h
+SOURCES += \
            character.cpp \
            main.cpp \
            mainWindow.cpp \
            scribblearea.cpp \
-           stroke.cpp
+           stroke.cpp \
+    splice.cpp

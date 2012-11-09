@@ -7,7 +7,7 @@
 #include <QWidget>
 #include <QTime>
 #include <vector>
-#include "blackbox.h"
+#include "splice.h"
 #include "constants.h"
 using namespace std;
 
@@ -44,7 +44,7 @@ using namespace std;
      void resizeEvent(QResizeEvent *event);
 
  private:
-     BlackBox BB;
+     Splice BB;
      void drawLineTo(const QPoint &endPoint);
      void resizeImage(QImage *image, const QSize &newSize);
      //vector<Stroke> strokeList;
