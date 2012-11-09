@@ -2,9 +2,11 @@
 #define BLACKBOX_H
 #include "stroke.h"
 #include "character.h"
+#include"constants.h"
 #include <vector>
 #include <fstream>
 #include <unordered_map>
+#include<map>
 #include <QString>
 #include <utility>
 class BlackBox
@@ -13,7 +15,8 @@ class BlackBox
 private:
     vector<Stroke> strokeList;
     vector<Character> characterList;
-    unordered_multimap<string,string> trainingData;
+    list<string> Keys;
+    multimap<string,feature> trainingData;
     //bool modified;
     //bool scribbling;
     bool strokeChanged;
@@ -51,6 +54,8 @@ public:
     }
     void setStrokeChange();
     void ResetData();
+    void writeMap();
+    void printfeature(feature& f,ofstream &out);
 
 };
 

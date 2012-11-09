@@ -31,10 +31,11 @@ public:
     //void setbox(int x1,int x2,int y1,int y2);
     void process_character();
     void printScaledSample();
+    vector<Pt> sampledChar;
 
 private:
     vector<Stroke> slist;
-    vector<Pt> sampledChar;
+
     int minx;
     int miny;
     int maxx;

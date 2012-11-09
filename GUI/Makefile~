@@ -267,7 +267,7 @@ moc_mainWindow.o: moc_mainWindow.cpp
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -std=c++0x -o moc_mainWindow.o moc_mainWindow.cpp
 
 moc_scribblearea.o: moc_scribblearea.cpp 
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -std=c++0x -o moc_scribblearea.o moc_scribblearea.cpp
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_scribblearea.o moc_scribblearea.cpp
 
 ####### Install
 

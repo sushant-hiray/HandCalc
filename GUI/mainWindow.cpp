@@ -22,18 +22,23 @@ using namespace std;
      button2->setFixedWidth(80);
      button2->setFixedHeight(25);
      QPushButton *button3 = new QPushButton("Reset");
-     button->setFixedWidth(70);
-     button->setFixedHeight(25);
+     button3->setFixedWidth(70);
+     button3->setFixedHeight(25);
+     QPushButton *finish = new QPushButton("Finish Training");
+     finish->setFixedWidth(70);
+     finish->setFixedHeight(25);
      QHBoxLayout *layout = new QHBoxLayout;
      layout->addWidget(button);
      layout->addWidget(button2);
      layout->addWidget(button3);
+     layout->addWidget(finish);
      traininginput = new QLineEdit;
      layout->addWidget(traininginput);
      scribbleArea->setLayout(layout);
      connect(button,SIGNAL(clicked()),this,SLOT(drawRect()));
      connect(button2,SIGNAL(clicked()),this,SLOT(addTrainingData()));
      connect(button3,SIGNAL(clicked()),this,SLOT(Reset()));
+     connect(finish,SIGNAL(clicked()),this,SLOT(finishTraining()));
 
  }
  void MainWindow::createMenus()
@@ -89,6 +94,10 @@ using namespace std;
      else{
          return;
      }
+ }
+
+ void MainWindow::finishTraining(){
+     scribbleArea->finishTrain();
  }
 
 

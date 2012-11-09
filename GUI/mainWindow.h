@@ -24,6 +24,7 @@
      void drawRect();
      void addTrainingData();
      void Reset();
+     void finishTraining();
 
  private:
      void createActions();

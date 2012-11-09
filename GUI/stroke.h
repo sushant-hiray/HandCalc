@@ -9,10 +9,7 @@ struct Point{
     int time;
 };
 
-struct Pt{
-    float x;
-    float y;
-};
+
 
 class Stroke {
 private:

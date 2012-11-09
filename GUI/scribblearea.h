@@ -8,6 +8,7 @@
 #include <QTime>
 #include <vector>
 #include "blackbox.h"
+#include "constants.h"
 using namespace std;
 
 
@@ -28,6 +29,7 @@ using namespace std;
      //vector<Stroke> getStrokeList();
      void updateRect();
      void addTrainingData(QString text);
+      void finishTrain();
 
  public slots:
       void clearImage();

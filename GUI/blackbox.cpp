@@ -13,6 +13,22 @@ BlackBox::BlackBox()
     yup=10000;
     ydown=0;
     //---@@@
+    Keys.push_back("H1");
+    Keys.push_back("V1");
+    Keys.push_back("V2");
+    Keys.push_back("V3");
+    Keys.push_back("D1");
+    Keys.push_back("D2");
+    Keys.push_back("L1");
+
+    Keys.push_back("VV");
+    Keys.push_back("HH");
+    Keys.push_back("DD");
+    Keys.push_back("LL");
+    Keys.push_back("HV");
+    Keys.push_back("HD");
+    Keys.push_back("VD");
+    Keys.push_back("VL");
 
     out.open("strokes.txt");
 
@@ -150,16 +166,31 @@ void BlackBox::TrainingProgram(){
 
          cout<<"\nNumber of strokes identified "<<strokeList.size()<<endl;
          //@@@
-
+         feature temp;
+         temp.id=key;
+         temp.vec=characterList[0].sampledChar;
          cout<< "info about primary preprocessing ";
          string reference;
          reference=characterList[0].preprocessing();
-         trainingData.insert(make_pair(reference,key));
+         trainingData.insert(make_pair(reference,temp));
          cout<<"Inserted new Training Data for "<<reference<<" with reference value "<<key<<endl;
 
          ResetData();
          out.close();
+}
 
+void BlackBox::writeMap(){
+    ofstream DataBase("DataBase.txt");
+    for(list<string>::iterator i=Keys.begin();i!=Keys.end();i++){
+        int count = trainingData.count(*i);
+        //pair<string,feature>::iterator trainingData.find(*i);
+        DataBase<<(*i)<< " :\n";
+        multimap<string,feature>::iterator local_it = trainingData.find(*i);
+        for (int j=0;j<count ; ++local_it ,j++ ){
+            printfeature(local_it->second,DataBase);
+
+        }
+    }
 
 }
 
@@ -191,6 +222,17 @@ int BlackBox::cgetMaxy(int i){
     return characterList[i].getMaxy();
 }
 
+void BlackBox::printfeature(feature &f, ofstream &out){
+    out<<"\t"<<f.id <<":\n";
+    for(int i=0;i<f.vec.size();i++){
+        out<<"\t\t("<<f.vec[i].x <<","<<f.vec[i].y<<")"<<endl;
+    }
+}
 //---@@@
 
-
+//helper
+/*for(  multimap<char,int>::iterator it = mymm.begin(), end = mymm.end(); it != end; it = mymm.upper_bound(it->first))
+  {
+      cout << it->first << ' ' << it->second << endl;
+  }
+*/

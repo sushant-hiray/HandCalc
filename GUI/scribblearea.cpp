@@ -170,3 +170,7 @@ using namespace std;
      painter.drawImage(QPoint(0, 0), *image);
      *image = newImage;
  }
+
+ void ScribbleArea::finishTrain(){
+     BB.writeMap();
+ }
