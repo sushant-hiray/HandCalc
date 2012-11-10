@@ -8,7 +8,6 @@
 #include <QTime>
 #include <vector>
 #include "splice.h"
-#include "constants.h"
 using namespace std;
 
 

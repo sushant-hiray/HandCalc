@@ -29,19 +29,24 @@ Splice::Splice()
     Keys.push_back("HD");
     Keys.push_back("VD");
     Keys.push_back("VL");
-
-    out.open("strokes.txt");
-
+  //  readDatabase();
+   readDatabase(trainingData);
 }
 
+/*void Splice::readDatabase(){
+    ifstream read;
+    read.open("DataBase.txt"); */
+
+
+
+
 void Splice::pushStrokePoint(int x, int y, long t){
+    if(y<yup) yup=y;
+    if(y>ydown) ydown=y;
     if(strokeChanged==true){
-        if(y<yup) yup=y;
-        if(y>ydown) ydown=y;
         strokeChanged=false;
         strokeCount++;
         prevx=x;prevy=y;
-        out<<".\n";
         strokeList.push_back(Stroke(strokeCount));
         strokeList[strokeCount].push(x,y,t);
     }
@@ -50,8 +55,6 @@ void Splice::pushStrokePoint(int x, int y, long t){
         strokeList[strokeCount].addtopath(sqrt(pow(x-prevx , 2) + pow(y-prevy,2)));
         prevx=x;prevy=y;
     }
-
-    out<<x<<","<<y<<endl;
 }
 
 void Splice::setStrokeChange(){
@@ -140,7 +143,6 @@ void Splice::lastCase(){
          for (int i=0;i<characterList.size();i++)
             cout<< characterList[i].preprocessing()<<endl;
 
-         out.close();
 
 }
 
@@ -176,7 +178,6 @@ void Splice::TrainingProgram(){
          cout<<"Inserted new Training Data for "<<reference<<" with reference value "<<key<<endl;
 
          ResetData();
-         out.close();
 }
 
 void Splice::writeMap(){
@@ -184,14 +185,14 @@ void Splice::writeMap(){
     for(list<string>::iterator i=Keys.begin();i!=Keys.end();i++){
         int count = trainingData.count(*i);
         //pair<string,feature>::iterator trainingData.find(*i);
-        DataBase<<(*i)<< " :\n";
+        DataBase<<(*i)<< ":\n";
         multimap<string,feature>::iterator local_it = trainingData.find(*i);
         for (int j=0;j<count ; ++local_it ,j++ ){
             printfeature(local_it->second,DataBase);
 
         }
     }
-
+    DataBase<<"end";
 }
 
 void Splice::ResetData(){
@@ -205,8 +206,6 @@ void Splice::ResetData(){
     yup=10000;
     ydown=0;
     //---@@@
-
-    out.open("strokes.txt");
 }
 
 int Splice::cgetMinx(int i){

@@ -3,7 +3,6 @@
 #include "stroke.h"
 #include <vector>
 #include <iostream>
-#include "constants.h"
 #include <cstring>
 #include <cmath>
 using namespace std;

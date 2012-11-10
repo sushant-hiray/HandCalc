@@ -1,14 +1,13 @@
 #ifndef SPLICE_H
 #define SPLICE_H
-#include "stroke.h"
 #include "character.h"
-#include"constants.h"
 #include <vector>
 #include <fstream>
 #include <unordered_map>
 #include<map>
 #include <QString>
 #include <utility>
+#include <cstring>
 class Splice
 {
 
@@ -21,7 +20,6 @@ private:
     //bool scribbling;
     bool strokeChanged;
     int strokeCount;
-    ofstream out;
     int prevx,prevy;
     string key;
 
@@ -43,6 +41,7 @@ public:
     //@@@strokes
     void pushStrokePoint(int x,int y, long int t);
     void lastCase();
+    //void readDatabase();
     void TrainingProgram();       //left to be written
     void changeKey(string text);
     int cgetMinx(int i);
