@@ -5,42 +5,81 @@
 #include <iostream>
 
 using namespace std;
- MainWindow::MainWindow()
+
+MainWindow::MainWindow(){
+    scribbleArea = new ScribbleArea;
+    setCentralWidget(scribbleArea);
+    createActions();
+    createMenus();
+    resetflag=0;
+
+    setWindowTitle(tr("Scribble"));
+    resize(500, 500);
+}
+
+void  MainWindow::MainWindowMaker()
  {
-     scribbleArea = new ScribbleArea;
-     setCentralWidget(scribbleArea);
-     createActions();
-     createMenus();
-     resetflag=0;
-
-     setWindowTitle(tr("Scribble"));
-     resize(500, 500);
-     QPushButton *button = new QPushButton("Evaluate");
-     button->setFixedWidth(70);
-     button->setFixedHeight(25);
-     QPushButton *button2 = new QPushButton("Train Data");
-     button2->setFixedWidth(80);
-     button2->setFixedHeight(25);
-     QPushButton *button3 = new QPushButton("Reset");
-     button3->setFixedWidth(70);
-     button3->setFixedHeight(25);
-     QPushButton *finish = new QPushButton("Finish Training");
-     finish->setFixedWidth(110);
-     finish->setFixedHeight(25);
      QHBoxLayout *layout = new QHBoxLayout;
-     layout->addWidget(button);
-     layout->addWidget(button2);
-     layout->addWidget(button3);
-     layout->addWidget(finish);
-     traininginput = new QLineEdit;
-     layout->addWidget(traininginput);
-     scribbleArea->setLayout(layout);
-     connect(button,SIGNAL(clicked()),this,SLOT(drawRect()));
-     connect(button2,SIGNAL(clicked()),this,SLOT(addTrainingData()));
-     connect(button3,SIGNAL(clicked()),this,SLOT(Reset()));
-     connect(finish,SIGNAL(clicked()),this,SLOT(finishTraining()));
+     if(val==1){
+         QPushButton *button = new QPushButton("Evaluate");
+         button->setFixedWidth(70);
+         button->setFixedHeight(25);
 
+         QPushButton *button3 = new QPushButton("Reset");
+         button3->setFixedWidth(70);
+         button3->setFixedHeight(25);
+         layout->addWidget(button);
+         layout->addWidget(button3);
+
+         //scribbleArea->setLayout(layout);
+         connect(button,SIGNAL(clicked()),this,SLOT(drawRect()));
+         connect(button3,SIGNAL(clicked()),this,SLOT(Reset()));
+     }
+     else {
+
+         QPushButton *button3 = new QPushButton("Reset");
+         button3->setFixedWidth(70);
+         button3->setFixedHeight(25);
+
+         QPushButton *button2 = new QPushButton("Train Data");
+         button2->setFixedWidth(80);
+         button2->setFixedHeight(25);
+
+         QPushButton *finish = new QPushButton("Finish Training");
+         finish->setFixedWidth(110);
+         finish->setFixedHeight(25);
+
+        // QHBoxLayout *layout = new QHBoxLayout;
+         layout->addWidget(button2);
+         layout->addWidget(button3);
+         layout->addWidget(finish);
+
+         traininginput = new QLineEdit;
+         layout->addWidget(traininginput);
+         connect(button2,SIGNAL(clicked()),this,SLOT(addTrainingData()));
+         connect(button3,SIGNAL(clicked()),this,SLOT(Reset()));
+         connect(finish,SIGNAL(clicked()),this,SLOT(finishTraining()));
+     }
+
+     back = new QPushButton("Back");
+     back->setFixedWidth(70);
+     back->setFixedHeight(25);
+      connect(back,SIGNAL(clicked()),this,SLOT(hide()));
+       connect(back,SIGNAL(clicked()),paa,SLOT(show()));
+    // QHBoxLayout *layout1 = new QHBoxLayout;
+     layout->addWidget(back);
+     //scribbleArea->setLayout(layout1);
+     scribbleArea->setLayout(layout);
+
+}
+
+ void MainWindow::setParameter(int a, splashScreen *parent){
+     val=a;
+     paa=parent;
+     //
+     //
  }
+
  void MainWindow::createMenus()
   {
 

@@ -1,6 +1,7 @@
 #ifndef SPLICE_H
 #define SPLICE_H
 #include "character.h"
+#include "DTW.h"
 #include <vector>
 #include <fstream>
 #include <unordered_map>

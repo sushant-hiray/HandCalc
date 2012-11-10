@@ -116,7 +116,8 @@ void Splice::charprocess(){
         Character temp;
         lastpro++;
         temp.push(strokeList[currpos]);
-         characterList.push_back(temp);
+        temp.process_character();
+        characterList.push_back(temp);
     }
 }
 
@@ -140,9 +141,26 @@ void Splice::lastCase(){
          //@@@
 
          cout<< "info about primary preprocessing ";
-         for (int i=0;i<characterList.size();i++)
-            cout<< characterList[i].preprocessing()<<endl;
-
+         string best;
+         float mincost=1000;
+         for (int i=0;i<characterList.size();i++){
+            string s;
+            s=characterList[i].preprocessing();
+            cout<< s<<endl;
+            int count = trainingData.count(s);
+            //pair<string,feature>::iterator trainingData.find(*i);
+            //DataBase<<(*i)<< ":\n";
+            multimap<string,feature>::iterator local_it = trainingData.find(s);
+            for (int j=0;j<count ; ++local_it ,j++ ){
+                //printfeature(local_it->second,DataBase);
+                float cost=DTW(characterList[i].sampledChar,local_it->second.vec);
+                if(cost < mincost){
+                    mincost=cost;
+                    best=local_it->second.id;
+                }
+            }
+            cout<<"Best Match is "<<best<<endl;
+        }
 
 }
 
@@ -171,11 +189,31 @@ void Splice::TrainingProgram(){
          feature temp;
          temp.id=key;
          temp.vec=characterList[0].sampledChar;
-         cout<< "info about primary preprocessing ";
+         cout<< "info about primary preprocessing: "<<endl;
          string reference;
          reference=characterList[0].preprocessing();
-         trainingData.insert(make_pair(reference,temp));
-         cout<<"Inserted new Training Data for "<<reference<<" with reference value "<<key<<endl;
+
+
+         //matching the characters
+         float mincost=10000;
+         string best;
+         multimap<string,feature>::iterator local_it = trainingData.find(reference);
+         int count = trainingData.count(reference);
+         for (int j=0;j<count ; ++local_it ,j++ ){
+             float cost=DTW(characterList[0].sampledChar,local_it->second.vec);
+             if(cost < mincost){
+                 mincost=cost;
+                 best=local_it->second.id;
+             }
+         }
+         if(best == key){
+             cout<<"No need of inserting Training Data for "<<reference<<" with reference value "<<key<<endl;
+         }
+
+         else{
+             trainingData.insert(make_pair(reference,temp));
+             cout<<"Inserted new Training Data for "<<reference<<" with reference value "<<key<<endl;
+         }
 
          ResetData();
 }

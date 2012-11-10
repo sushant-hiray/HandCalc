@@ -3,17 +3,19 @@
 
 
 #include <QList>
- #include <QMainWindow>
+#include <QMainWindow>
 #include <QLineEdit>
-
+#include "splashscreen.h"
  class ScribbleArea;
-
+ class splashScreen;
  class MainWindow : public QMainWindow
  {
      Q_OBJECT
 
  public:
      MainWindow();
+     void MainWindowMaker();
+     void setParameter(int a,splashScreen* parent);
 
 
  private slots:
@@ -27,6 +29,9 @@
      void finishTraining();
 
  private:
+     int val;
+     splashScreen* paa;
+     QPushButton *back;
      void createActions();
      void createMenus();
       int resetflag;
