@@ -22,9 +22,10 @@ private:
     int max_y;
     int orientation; //0-horizontal,1-vertical,2-diagonal,3-closed
     float pathlength;
-    int directionflag;  //1- correct direction 0-reverse direction
+
 
 public:
+    int directionflag;  //1- correct direction 0-reverse direction
     Stroke(int id);
     void updateStroke();
     void updateSampleStroke();
@@ -36,6 +37,7 @@ public:
     int findOrientation(float delt);
     void printSample();
     Pt getPoint(int i);
+    void setPoint(Pt point,int i);
     int getsize(){
         return sampled.size();
     }

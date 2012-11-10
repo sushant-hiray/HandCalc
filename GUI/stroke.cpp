@@ -203,3 +203,7 @@ void Stroke::printSample(){
 Pt Stroke::getPoint(int i){
     return sampled[i];
 }
+
+void Stroke::setPoint(Pt point,int i){
+    sampled[i]=point;
+}

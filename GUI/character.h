@@ -32,6 +32,8 @@ public:
     void process_character();
     void printScaledSample();
     vector<Pt> sampledChar;
+    void reorderStrokes();
+    int setPreference();
 
 private:
     vector<Stroke> slist;

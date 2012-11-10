@@ -27,26 +27,71 @@ void Character::push(Stroke x){
     slist.push_back(x);
 }
 
+void Character::reorderStrokes(){
+    for(int i=0; i <slist.size();i++){
+        if(slist[i].directionflag==1){
+            continue;
+        }
+        else{
+            for(int k=0,j=slist[i].getsize() - 1; k < j; k++ ,j--){
+
+                Pt temp;
+                temp=slist[i].getPoint(k);
+                slist[i].setPoint(slist[i].getPoint(j),k);
+                slist[i].setPoint(temp,j);
+
+            }
+        }
+    }
+}
+
+int Character::setPreference(){     //1- prefrence is correct by default , 0 - change the prefernece
+    int refx=minx;
+    int refy=miny;
+    Pt lastpoint0=slist[0].getPoint(slist[0].getsize() - 1);
+    Pt lastpoint1=slist[1].getPoint(slist[1].getsize() - 1);
+    float angle0= (lastpoint0.y - refy)/(lastpoint0.x -refx);
+    float angle1= (lastpoint1.y - refy)/(lastpoint1.x -refx);
+    if( angle0 <= angle1){
+        return 1;
+
+    }
+    else{
+        return 0;
+
+    }
+}
+
 void Character::process_character(){
      int size = slist.size();
+     reorderStrokes();
      if(size == 1){
-         for (int i=0;i<slist[0].getsize();i++){
-             sampledChar.push_back(slist[0].getPoint(i));
-         }
-         ScaleCharacter();
+          for (int i=0;i<slist[0].getsize();i++){
+               sampledChar.push_back(slist[0].getPoint(i));
+          }
+        ScaleCharacter();
      }
      else{
-         for(int i=0;i<slist[0].getsize();i=i+2){
-             sampledChar.push_back(slist[0].getPoint(i));
+         int flag=setPreference();
+         if(flag==1){
+            for(int i=0;i<slist[0].getsize();i=i+2){
+                 sampledChar.push_back(slist[0].getPoint(i));
+             }
+            for(int i=0;i<slist[1].getsize();i=i+2){
+              sampledChar.push_back(slist[1].getPoint(i));
+             }
          }
-         for(int i=0;i<slist[1].getsize();i=i+2){
-             sampledChar.push_back(slist[1].getPoint(i));
+         else{
+             for(int i=0;i<slist[1].getsize();i=i+2){
+               sampledChar.push_back(slist[1].getPoint(i));
+              }
+             for(int i=0;i<slist[0].getsize();i=i+2){
+                  sampledChar.push_back(slist[0].getPoint(i));
+              }
          }
          ScaleCharacter();
 
-
-     }
-
+      }
 }
 
 void Character::ScaleCharacter(){
