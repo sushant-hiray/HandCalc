@@ -139,7 +139,7 @@ void Splice::lastCase(){
 
          cout<<"\nNumber of strokes identified "<<strokeList.size()<<endl;
          //@@@
-
+        string finalexpression;
          cout<< "info about primary preprocessing ";
          string best;
 
@@ -161,7 +161,10 @@ void Splice::lastCase(){
                 }
             }
             cout<<"Best Match is "<<best<<endl;
+            finalexpression.append(best);
         }
+
+        cout<<"The final expression to be evaluated is  : : "<<finalexpression <<endl;
 
 }
 
