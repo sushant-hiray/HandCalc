@@ -142,17 +142,18 @@ void Splice::lastCase(){
 
          cout<< "info about primary preprocessing ";
          string best;
-         float mincost=1000;
+
          for (int i=0;i<characterList.size();i++){
+            float mincost=1000;
             string s;
             s=characterList[i].preprocessing();
-            cout<< s<<endl;
+            cout<<"preprocessed "<< s<<endl;
             int count = trainingData.count(s);
             //pair<string,feature>::iterator trainingData.find(*i);
             //DataBase<<(*i)<< ":\n";
             multimap<string,feature>::iterator local_it = trainingData.find(s);
             for (int j=0;j<count ; ++local_it ,j++ ){
-                //printfeature(local_it->second,DataBase);
+               // printfeature(local_it->second,trainingData);
                 float cost=DTW(characterList[i].sampledChar,local_it->second.vec);
                 if(cost < mincost){
                     mincost=cost;
