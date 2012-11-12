@@ -133,7 +133,16 @@ void Character::printScaledSample(){
 bool lineoutput(float slope,float c,float x,float y){
     float ref;
     ref=slope*x-y+c;
-    if(ref*c>0){
+    if(c==0){
+        if(ref < 0){
+            return 1;
+
+        }
+        else{
+            return 0;
+        }
+    }
+    else if(ref*c>0){
         return 1;   //it lies on the left
     }
     else{
@@ -150,25 +159,96 @@ string Character::preprocessing(){
             finalValue="H1";             //horizontal
             return finalValue;
         }
-        if(orientation==1){               //vertical
-            float fraction=1.5;
-            if(abs(sampledChar[0].x - sampledChar[sampledChar.size()-1].x)*fraction > (maxx-minx)){
-                cout<<sampledChar[0].x<<" "<<sampledChar[sampledChar.size()-1].x<<" "<<minx<<" "<<maxx<<endl;
-                finalValue="V1";
+        if(orientation==1){
+            cout<<"abc"<<endl;
+            //vertical
+            float fraction=2;
+            cout<<"stroke analysis "<<sampledChar[0].x<<" "<<sampledChar[sampledChar.size()-1].x<<" "<<minx<<" "<<maxx<<endl;
+            if((maxx-minx)/(maxy-miny) < distortion){
+                cout<<"sampled "<<sampledChar[0].x<<" "<<sampledChar[sampledChar.size()-1].x<<" "<<minx<<" "<<maxx<<endl;
+                float leftcount=0;
+                float rightcount=0;
+                if(sampledChar[0].x==sampledChar[sampledChar.size()-1].x){
+                    cout<<"qwe"<<endl;
+                    for(int q=0;q<sampledChar.size();q++){
+
+                        if(sampledChar[q].x <= sampledChar[0].x){
+                            leftcount++;
+                        }
+                        else{
+                            rightcount++;
+                        }
+                    }
+                    float fraction;
+                    fraction=leftcount/(leftcount + rightcount);
+                    cout<<"fraction is "<<fraction<<endl;
+                    cout<<leftcount<<" "<<rightcount<<endl;
+                    float g=0.2;
+                    float h=0.8;
+                    if(fraction < g || fraction > h){
+                        finalValue="V1";
+                    }
+                    else if(fraction < 0.37 ){
+                        finalValue="V2";
+                    }
+                    else{
+                        finalValue="V3";
+                    }
+
+                }
+                else{
+                    cout<<"asd"<<endl;
+                    float y2=sampledChar[sampledChar.size()-1].y;
+                    float x2=sampledChar[sampledChar.size()-1].x;
+                    float y1=sampledChar[0].y;
+                    float x1=sampledChar[0].x;
+                    float slope=(y2 - y1)/(x2 - x1);
+                    float c = (y1*x2 -y2*x1)/(x2 - x1);
+
+                    for(int q=0;q<sampledChar.size();q++){
+                        if(lineoutput(slope,c,sampledChar[q].x,sampledChar[q].y)){
+                            leftcount++;
+                        }
+                        else{
+                            rightcount++;
+                        }
+                    }
+                    float fraction;
+
+                    cout<<leftcount<<" "<<rightcount<<endl;
+                    fraction=leftcount/(leftcount + rightcount);
+                     cout<<"fraction is "<<fraction<<endl;
+                    float g=0.2;
+                    float h=0.8;
+                    if(fraction < g || fraction > h){
+                        finalValue="V1";
+                    }
+                    else if(fraction < 0.37 ){
+                        finalValue="V2";
+                    }
+                    else{
+                        finalValue="V3";
+                    }
+
+
+                }
+
                 return finalValue;
             }
             else if((maxx - max(sampledChar[0].x ,sampledChar[sampledChar.size()-1].x))*fraction<=(maxx-minx)){
+                cout<<"tyu"<<endl;
                 finalValue="V3";
                 return finalValue;
             }
             else{
                 cout<<maxx<<" "<<minx<<" "<<sampledChar[0].x<<" "<<sampledChar[sampledChar.size()-1].x<<endl;
+                cout<<"lkj"<<endl;
                 finalValue="V2";
                 return finalValue;
             }
         }
         if(orientation==2){               //diagonal
-            if(sampledChar[0].x < sampledChar[sampledChar.size()-1].x){
+            if(sampledChar[0].y < sampledChar[sampledChar.size()-1].y){
                 finalValue="D1";
                 return finalValue;
             }
