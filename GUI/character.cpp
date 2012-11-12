@@ -17,7 +17,9 @@ void Character::print(){
 }
 
 void Character::push(Stroke x){
-    if(slist.empty()) {minx=x.getMinx();miny=x.getMiny();maxx=x.getMaxx();maxy=x.getMaxy();}
+    if(slist.empty()) {minx=x.getMinx();miny=x.getMiny();maxx=x.getMaxx();maxy=x.getMaxy();
+        cout<<minx<<" "<<maxx<<endl;
+    }
     else{
         if(x.getMinx()<minx) minx=x.getMinx();
         if(x.getMiny()<miny) miny=x.getMiny();
@@ -109,15 +111,33 @@ void Character::ScaleCharacter(){
         sampledChar[i].y = (sampledChar[i].y - miny)*ratio;
 
     }
-    orgmaxx=maxx;maxx=maxx*ratio;
-    orgmaxy=maxy;maxy=maxy*ratio;
-    orgminx=minx;minx=minx*ratio;
-    orgminy=miny;miny=miny*ratio;
+    cout<<"Scaling "<<ratio<<endl;
+    cout<<minx<<" "<<maxx<<" "<<miny<<" "<<maxy<<endl;
+    orgmaxx=maxx;
+    maxx=(maxx-minx)*ratio;
+    orgmaxy=maxy;
+    maxy=(maxy-miny)*ratio;
+    orgminx=minx;
+    minx=(minx-minx)*ratio;
+    orgminy=miny;
+    miny=(miny-miny)*ratio;
+    cout<<minx<<" "<<maxx<<" "<<miny<<" "<<maxy<<endl;
 }
 
 void Character::printScaledSample(){
     for(int i=0;i<sampledChar.size();i++){
         cout<<"( "<<sampledChar[i].x<<" , "<<sampledChar[i].y<<" )"<<endl;
+    }
+}
+
+bool lineoutput(float slope,float c,float x,float y){
+    float ref;
+    ref=slope*x-y+c;
+    if(ref*c>0){
+        return 1;   //it lies on the left
+    }
+    else{
+        return 0;  //right
     }
 }
 
@@ -131,8 +151,9 @@ string Character::preprocessing(){
             return finalValue;
         }
         if(orientation==1){               //vertical
-            float fraction=2;
+            float fraction=1.5;
             if(abs(sampledChar[0].x - sampledChar[sampledChar.size()-1].x)*fraction > (maxx-minx)){
+                cout<<sampledChar[0].x<<" "<<sampledChar[sampledChar.size()-1].x<<" "<<minx<<" "<<maxx<<endl;
                 finalValue="V1";
                 return finalValue;
             }
@@ -141,10 +162,10 @@ string Character::preprocessing(){
                 return finalValue;
             }
             else{
+                cout<<maxx<<" "<<minx<<" "<<sampledChar[0].x<<" "<<sampledChar[sampledChar.size()-1].x<<endl;
                 finalValue="V2";
                 return finalValue;
             }
-
         }
         if(orientation==2){               //diagonal
             if(sampledChar[0].x < sampledChar[sampledChar.size()-1].x){

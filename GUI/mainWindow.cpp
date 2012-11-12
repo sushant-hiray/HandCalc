@@ -180,6 +180,8 @@ void  MainWindow::MainWindowMaker()
  }
 
  void MainWindow::Reset(){
+     scribbleArea->Reset();
      scribbleArea->clearImage();
+
      resetflag=0;
  }

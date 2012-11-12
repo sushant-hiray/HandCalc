@@ -28,7 +28,8 @@ using namespace std;
      //vector<Stroke> getStrokeList();
      void updateRect();
      void addTrainingData(QString text);
-      void finishTrain();
+     void finishTrain();
+     void Reset();
 
  public slots:
       void clearImage();

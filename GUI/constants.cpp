@@ -30,8 +30,8 @@ void readDatabase(multimap<string,feature>& trainingData){
     cout<<"aftr ws "<<char(data.peek())<<endl;
     data.getline(temp,5,':');
     key=temp;
-    cout<<"key is"<<key<<endl;
-    while(key.size()!=3){
+    cout<<"key is"<<key.size()<<endl;
+    while(key.size() < 3 ){
         whitespace(data);
         data.getline(temp,5,':');
         symbol=temp;

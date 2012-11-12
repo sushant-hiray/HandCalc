@@ -234,8 +234,12 @@ void Splice::writeMap(){
 }
 
 void Splice::ResetData(){
-    strokeList.erase(strokeList.begin());
-    characterList.erase(characterList.begin());
+    if(!strokeList.empty()){
+        strokeList.erase(strokeList.begin());
+    }
+     if(!characterList.empty()){
+        characterList.erase(characterList.begin());
+     }
     strokeChanged = true;
     strokeCount =-1;
  //@@@   for characterlist

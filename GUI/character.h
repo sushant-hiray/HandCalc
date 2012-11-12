@@ -15,16 +15,16 @@ public:
     void print(); //print the stroke in form (3,4)
     void ScaleCharacter();
     string preprocessing();
-    int getMinx(){
+    float getMinx(){
         return orgminx;
     }
-    int getMiny(){
+    float getMiny(){
         return orgminy;
     }
-    int getMaxx(){
+    float getMaxx(){
         return orgmaxx;
     }
-    int getMaxy(){
+    float getMaxy(){
         return orgmaxy;
     }
     //void setbox(int x1,int x2,int y1,int y2);
@@ -37,10 +37,10 @@ public:
 private:
     vector<Stroke> slist;
 
-    int minx;
-    int miny;
-    int maxx;
-    int maxy;
+    float minx;
+    float miny;
+    float maxx;
+    float maxy;
     int orgminx;
     int orgminy;
     int orgmaxx;

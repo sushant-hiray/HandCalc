@@ -174,3 +174,7 @@ using namespace std;
  void ScribbleArea::finishTrain(){
      BB.writeMap();
  }
+
+ void ScribbleArea::Reset(){
+     BB.ResetData();
+ }
