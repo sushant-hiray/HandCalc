@@ -26,7 +26,6 @@ class ArithmeticExpression{
 	TreeNode1* maketree(string t);
 	TreeNode1* makentree(TreeNode1& l, string op, TreeNode1& r);
 	float eval(TreeNode1 v);
-	bool isA_priorto_B(string A, string B);
 	vector<string> arrange(string str);
 	vector<string> infix_to_postfix(vector<string> to_be_evaluated);
 	

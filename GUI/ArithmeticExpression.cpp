@@ -45,19 +45,15 @@ TreeNode1* ArithmeticExpression::makentree(TreeNode1& l, string op, TreeNode1& r
 	return T;
 }
 
-bool ArithmeticExpression::isA_priorto_B(string A, string B){
-	if(A==B){
-        return true;
-		if(A=="/") return true;
-		else return false;
-	}
-	else if(A=="/"){return true;}
-	else if(A=="*" and B!= "/"){return true;}
-	else if((A == "+")or(A == "-")){
-		if(B == "+" or B == "-"){return true;}
-        else false;
-	}
-	else false;
+int getval(string x){
+    if(x=="/") return 4;
+    else if(x=="*") return 3;
+    else if(x=="+") return 2;
+    else return 1;
+}
+bool isAB(string a,string b){
+    if(getval(a)> getval(b)) {return true;}
+    else return false;
 }
 
 vector<string> ArithmeticExpression::arrange(string str){
@@ -133,7 +129,7 @@ vector<string> ArithmeticExpression::infix_to_postfix(vector<string> to_be_evalu
 		}
 		else{
 			//while(Operator_Holder.size() !=0 and !(isA_priorto_B(*infix_itr,Operator_Holder.top()))){
-            while(Operator_Holder.size() !=0 and !(isA_priorto_B(Operator_Holder.top(),*infix_itr))){
+            while(Operator_Holder.size() !=0 and !(isAB(*infix_itr,Operator_Holder.top()))){
 				postfix.push_back(Operator_Holder.top());
 				Operator_Holder.pop();
 			}
@@ -142,10 +138,11 @@ vector<string> ArithmeticExpression::infix_to_postfix(vector<string> to_be_evalu
 		infix_itr++;
 	}
 	while(Operator_Holder.size() !=0){
+        cout<<"....................................................coutter"<<endl;
 		postfix.push_back(Operator_Holder.top());
 		Operator_Holder.pop();
-	}	
-	return postfix;
+    }
+    return postfix;
 }
 
 void ArithmeticExpression::printExpression(){			//prints expression stored in Tree as infix expression

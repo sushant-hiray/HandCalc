@@ -131,10 +131,13 @@ void Splice::charprocess(){
 string Splice::lastCase(){
     if(lastpro>currpos) ;//cout<<"WE are done ^^^^^^^^^^^^^^^^^^^^^^^^\n";//we are done as last go coupled with sec-last
          else{
+        cout<<"lastCase "<<lastpro<<" "<<currpos<<endl;
              Character temp;
              temp.push(strokeList[strokeList.size()-1]);
              temp.process_character();
              characterList.push_back(temp);
+             currpos++;
+             lastpro++;
          }
          //---@@@ END CASE HANDLED
 
