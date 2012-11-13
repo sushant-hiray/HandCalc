@@ -58,11 +58,18 @@ void Splice::pushStrokePoint(int x, int y, long t){
 }
 
 void Splice::setStrokeChange(){
+    float StrayStrokeLength = 20.0;
     if(strokeCount >= 0){
         cout<< "path length of stroke is" <<strokeList[strokeCount].getpathlength() << endl;
     }
     strokeChanged=true;
     //@@@
+    if(strokeList[strokeCount].getpathlength()  < StrayStrokeLength) { //stray mark identified ignoring
+        cout<<"Stray mark .... Ignored \n";
+        strokeCount-- ;
+        strokeList.pop_back();
+        return;
+    }
     //strokeList[strokeCount].updateStroke();
     strokeList[strokeCount].sampleStroke();
     strokeList[strokeCount].updateSampleStroke();
@@ -121,7 +128,7 @@ void Splice::charprocess(){
     }
 }
 
-void Splice::lastCase(){
+string Splice::lastCase(){
     if(lastpro>currpos) ;//cout<<"WE are done ^^^^^^^^^^^^^^^^^^^^^^^^\n";//we are done as last go coupled with sec-last
          else{
              Character temp;
@@ -139,10 +146,10 @@ void Splice::lastCase(){
 
          cout<<"\nNumber of strokes identified "<<strokeList.size()<<endl;
          //@@@
-        string finalexpression;
+
          cout<< "info about primary preprocessing ";
          string best;
-
+         string output;
          for (int i=0;i<characterList.size();i++){
             float mincost=1000;
             string s;
@@ -161,10 +168,12 @@ void Splice::lastCase(){
                 }
             }
             cout<<"Best Match is "<<best<<endl;
-            finalexpression.append(best);
+            output.append(best);
         }
-
-        cout<<"The final expression to be evaluated is  : : "<<finalexpression <<endl;
+         cout<<"final Result is "<<output<<endl;
+         //ResetData();
+         cout<<characterList.size()<<" "<<strokeList.size()<<endl;
+        return output;
 
 }
 
@@ -239,11 +248,12 @@ void Splice::writeMap(){
 
 void Splice::ResetData(){
     if(!strokeList.empty()){
-        strokeList.erase(strokeList.begin());
+        strokeList.erase(strokeList.begin(),strokeList.end());
     }
      if(!characterList.empty()){
-        characterList.erase(characterList.begin());
+        characterList.erase(characterList.begin(),characterList.end());
      }
+     cout<<strokeList.size()<<"in reset Data   "<<characterList.size()<<endl;
     strokeChanged = true;
     strokeCount =-1;
  //@@@   for characterlist

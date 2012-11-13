@@ -26,7 +26,7 @@ using namespace std;
      QColor penColor() const { return myPenColor; }
      int penWidth() const { return myPenWidth; }
      //vector<Stroke> getStrokeList();
-     void updateRect();
+     string updateRect();
      void addTrainingData(QString text);
      void finishTrain();
      void Reset();

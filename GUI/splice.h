@@ -41,7 +41,7 @@ public:
     Splice();
     //@@@strokes
     void pushStrokePoint(int x,int y, long int t);
-    void lastCase();
+    string lastCase();
     //void readDatabase();
     void TrainingProgram();       //left to be written
     void changeKey(string text);

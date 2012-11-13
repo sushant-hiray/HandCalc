@@ -108,8 +108,8 @@ using namespace std;
      }
  }
 
- void ScribbleArea::updateRect(){
-	 BB.lastCase();
+ string ScribbleArea::updateRect(){
+     string out=BB.lastCase();
 
 
      QPainter painter(&image);
@@ -128,6 +128,9 @@ using namespace std;
      }
 
      update();
+     cout<<"returning from updateRect\n";
+     return out;
+
 
  }
 

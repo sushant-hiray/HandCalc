@@ -3,7 +3,7 @@
 #include "mainWindow.h"
 #include "scribblearea.h"
 #include <iostream>
-
+#include<sstream>
 using namespace std;
 
 MainWindow::MainWindow(){
@@ -19,7 +19,7 @@ MainWindow::MainWindow(){
 
 void  MainWindow::MainWindowMaker()
  {
-     QHBoxLayout *layout = new QHBoxLayout;
+    QHBoxLayout *layout = new QHBoxLayout;
      if(val==1){
          QPushButton *button = new QPushButton("Evaluate");
          button->setFixedWidth(70);
@@ -28,8 +28,15 @@ void  MainWindow::MainWindowMaker()
          QPushButton *button3 = new QPushButton("Reset");
          button3->setFixedWidth(70);
          button3->setFixedHeight(25);
+         output = new QLineEdit;
+         back = new QPushButton("Back");
+         back->setFixedWidth(70);
+         back->setFixedHeight(25);
+
          layout->addWidget(button);
          layout->addWidget(button3);
+         layout->addWidget(back);
+         layout->addWidget(output);
 
          //scribbleArea->setLayout(layout);
          connect(button,SIGNAL(clicked()),this,SLOT(drawRect()));
@@ -49,10 +56,15 @@ void  MainWindow::MainWindowMaker()
          finish->setFixedWidth(110);
          finish->setFixedHeight(25);
 
+         back = new QPushButton("Back");
+         back->setFixedWidth(70);
+         back->setFixedHeight(25);
+
         // QHBoxLayout *layout = new QHBoxLayout;
          layout->addWidget(button2);
          layout->addWidget(button3);
          layout->addWidget(finish);
+         layout->addWidget(back);
 
          traininginput = new QLineEdit;
          layout->addWidget(traininginput);
@@ -61,13 +73,10 @@ void  MainWindow::MainWindowMaker()
          connect(finish,SIGNAL(clicked()),this,SLOT(finishTraining()));
      }
 
-     back = new QPushButton("Back");
-     back->setFixedWidth(70);
-     back->setFixedHeight(25);
+
       connect(back,SIGNAL(clicked()),this,SLOT(hide()));
        connect(back,SIGNAL(clicked()),paa,SLOT(show()));
     // QHBoxLayout *layout1 = new QHBoxLayout;
-     layout->addWidget(back);
      //scribbleArea->setLayout(layout1);
      scribbleArea->setLayout(layout);
 
@@ -121,8 +130,23 @@ void  MainWindow::MainWindowMaker()
  }
 
  void MainWindow::drawRect(){
-     scribbleArea->updateRect();
+     string out;
+     out=scribbleArea->updateRect();
 
+    //if(out=="1+2*3"){cout<<"matching \n";}
+    cout<<"printing the ecpression " ;
+     ArithmeticExpression a;
+     float ans;
+     ans=a.evaluate(out);
+     cout<<"printing the ecpression " ;a.printExpression();
+     ostringstream buffer;
+     buffer<<ans;
+     string answer=buffer.str();
+     out.append(" = ");
+     out.append(answer);
+
+     QString qstr(out.c_str());
+     output->setText(qstr);
  }
 
  void MainWindow::addTrainingData(){

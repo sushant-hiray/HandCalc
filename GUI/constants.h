@@ -11,6 +11,7 @@ using namespace std;
 #define SR 36  //sampling rate
 #define distortion 0.3 // x/y
 
+
 //constants for preprocessing
 #define Delta 0.20
 #define Threshold 0.5
@@ -18,6 +19,7 @@ struct Pt{
     float x;
     float y;
 };
+
 
 struct feature{
     string id; //id is the actual symbol

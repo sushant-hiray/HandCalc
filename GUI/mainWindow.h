@@ -6,6 +6,7 @@
 #include <QMainWindow>
 #include <QLineEdit>
 #include "splashscreen.h"
+#include "ArithmeticExpression.h"
  class ScribbleArea;
  class splashScreen;
  class MainWindow : public QMainWindow
@@ -16,6 +17,7 @@
      MainWindow();
      void MainWindowMaker();
      void setParameter(int a,splashScreen* parent);
+     QLineEdit* output;
 
 
  private slots:
