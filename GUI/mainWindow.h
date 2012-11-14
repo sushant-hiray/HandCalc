@@ -29,11 +29,13 @@
      void addTrainingData();
      void Reset();
      void finishTraining();
+     void undoAction();
 
  private:
      int val;
      splashScreen* paa;
      QPushButton *back;
+     QPushButton *undo; //in the evaluate screen
      void createActions();
      void createMenus();
       int resetflag;

@@ -28,6 +28,14 @@ public:
         return orgmaxy;
     }
     //void setbox(int x1,int x2,int y1,int y2);
+    float minx;
+    float miny;
+    float maxx;
+    float maxy;
+    int orgminx;
+    int orgminy;
+    int orgmaxx;
+    int orgmaxy;
     void process_character();
     void printScaledSample();
     vector<Pt> sampledChar;
@@ -37,14 +45,7 @@ public:
 private:
     vector<Stroke> slist;
 
-    float minx;
-    float miny;
-    float maxx;
-    float maxy;
-    int orgminx;
-    int orgminy;
-    int orgmaxx;
-    int orgmaxy;
+
 };
 
 #endif // CHARACTER_H

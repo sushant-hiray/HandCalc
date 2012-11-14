@@ -16,15 +16,16 @@ private:
     int strokeid;
     vector<Point> stroke;
     vector<Pt> sampled;
-    int min_x;
-    int max_x;
-    int min_y;
-    int max_y;
     int orientation; //0-horizontal,1-vertical,2-diagonal,3-closed
     float pathlength;
 
 
 public:
+    bool intocharlist; //whether it is a part of some character in characterList or not USED WHEN BACKSPACE FUNC IS CALLED
+    int min_x;
+    int max_x;
+    int min_y;
+    int max_y;
     int directionflag;  //1- correct direction 0-reverse direction
     Stroke(int id);
     void updateStroke();

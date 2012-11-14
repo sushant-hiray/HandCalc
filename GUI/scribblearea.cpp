@@ -181,3 +181,14 @@ using namespace std;
  void ScribbleArea::Reset(){
      BB.ResetData();
  }
+
+ void  ScribbleArea::undoAction(){
+     myRect delArea=  BB.backSpace();
+     cout<<"deleting in the range" << delArea.x1 <<" "<<delArea.y1<<" "<<delArea.x2<<" "<<delArea.y2<<endl;
+     QPainter painter(&image);
+     painter.setPen(QPen(Qt::white, myPenWidth, Qt::SolidLine, Qt::RoundCap,
+                         Qt::RoundJoin));
+     painter.setBrush(QBrush( Qt::white,Qt::SolidPattern));
+     painter.drawRect(delArea.x1,delArea.y1,delArea.x2-delArea.x1,delArea.y2-delArea.y1);
+     update();
+ }

@@ -45,6 +45,7 @@ public:
     //void readDatabase();
     void TrainingProgram();       //left to be written
     void changeKey(string text);
+    myRect backSpace();  //delete last stroke(if alone) or last character(in no lonely stroke left)
     int cgetMinx(int i);
     int cgetMiny(int i);
     int cgetMaxx(int i);

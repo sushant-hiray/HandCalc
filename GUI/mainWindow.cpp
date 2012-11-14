@@ -20,7 +20,8 @@ MainWindow::MainWindow(){
 void  MainWindow::MainWindowMaker()
  {
     QHBoxLayout *layout = new QHBoxLayout;
-     if(val==1){
+     if(val==1){ //make the evaluate screen
+
          QPushButton *button = new QPushButton("Evaluate");
          button->setFixedWidth(70);
          button->setFixedHeight(25);
@@ -28,19 +29,28 @@ void  MainWindow::MainWindowMaker()
          QPushButton *button3 = new QPushButton("Reset");
          button3->setFixedWidth(70);
          button3->setFixedHeight(25);
+
          output = new QLineEdit;
+
          back = new QPushButton("Back");
          back->setFixedWidth(70);
          back->setFixedHeight(25);
 
+         undo=new QPushButton("UNDO");
+         undo->setFixedWidth(70);
+         undo->setFixedHeight(25);
+
+
          layout->addWidget(button);
          layout->addWidget(button3);
          layout->addWidget(back);
+         layout->addWidget(undo);
          layout->addWidget(output);
 
          //scribbleArea->setLayout(layout);
          connect(button,SIGNAL(clicked()),this,SLOT(drawRect()));
          connect(button3,SIGNAL(clicked()),this,SLOT(Reset()));
+         connect(undo,SIGNAL(clicked()),this,SLOT(undoAction()));
      }
      else {
 
@@ -147,6 +157,10 @@ void  MainWindow::MainWindowMaker()
 
      QString qstr(out.c_str());
      output->setText(qstr);
+ }
+
+ void MainWindow::undoAction(){
+     scribbleArea->undoAction();
  }
 
  void MainWindow::addTrainingData(){

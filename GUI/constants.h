@@ -25,6 +25,17 @@ struct feature{
     string id; //id is the actual symbol
     vector<Pt> vec;
 };
+
+struct myRect{ //to tell which area to delete from the canvas when backspace operation is done
+    int x1;
+    int y1;
+    int x2;
+    int y2;
+    myRect(){
+        x1=x2=y1=y2=0;
+    }
+};
+
 void whitespace(ifstream& in);
 void readDatabase(multimap<string,feature>& trainingData);
 void readXY(float& x,float& y,ifstream& in);

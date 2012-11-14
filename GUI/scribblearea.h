@@ -8,6 +8,7 @@
 #include <QTime>
 #include <vector>
 #include "splice.h"
+#include "constants.h"
 using namespace std;
 
 
@@ -34,6 +35,7 @@ using namespace std;
  public slots:
       void clearImage();
       void print();
+      void undoAction();
 
 
  protected:

@@ -9,7 +9,7 @@ Splice::Splice()
 
     //@@@   for characterlist
     lastpro=0;
-    currpos=0;
+    currpos=-1;
     yup=10000;
     ydown=0;
     //---@@@
@@ -75,6 +75,7 @@ void Splice::setStrokeChange(){
     strokeList[strokeCount].updateSampleStroke();
     currpos=strokeCount; //cout<<"strokecoutn is............................."<<strokeCount<<endl;
     charprocess();
+    cout<<"charprocessing done wiht stokelist size"<< strokeList.size()<<"charaaterlist size "<<characterList.size()<< " currpos" <<currpos<<"lastpro "<<lastpro<<endl;
     //---@@@
 }
 
@@ -97,19 +98,22 @@ void Splice::charprocess(){
     //cout<<"processing now................"<<lastpro<< "    "<<currpos;
     int result=judge(lastpro,currpos);
     if(lastpro==currpos); //do nothing because only one stroke in hand so wait for next stroke
-    else if(result==0){ //same character
+    else if(result==0){ //same character formed by two strokes at currpos and lastpro
         Character temp;
+        //set flags of strokes in the strokeList that they've been used as a part of the character in characterlist
+        strokeList[lastpro].intocharlist=1;
+        strokeList[currpos].intocharlist=1;
         temp.push(strokeList[lastpro]);
         temp.push(strokeList[currpos]);
         temp.process_character();
         lastpro=currpos+1;
         characterList.push_back(temp);
-
     }
 
     else if(result==2) { //make lastpro a character and move lastpro pointr to currpos
         //cout<<"########   into res 2  "<<strokeList[lastpro].getid()<<endl;
         Character temp;
+        strokeList[lastpro].intocharlist=1;
         temp.push(strokeList[lastpro]);
         temp.process_character();
          characterList.push_back(temp);
@@ -133,10 +137,11 @@ string Splice::lastCase(){
          else{
         cout<<"lastCase "<<lastpro<<" "<<currpos<<endl;
              Character temp;
+             strokeList[strokeList.size()-1].intocharlist=1; //set flag (part of charlist) in the last stroke which is inserted as a character
              temp.push(strokeList[strokeList.size()-1]);
              temp.process_character();
              characterList.push_back(temp);
-             currpos++;
+             //currpos++;
              lastpro++;
          }
          //---@@@ END CASE HANDLED
@@ -261,7 +266,7 @@ void Splice::ResetData(){
     strokeCount =-1;
  //@@@   for characterlist
     lastpro=0;
-    currpos=0;
+    currpos=-1;
     yup=10000;
     ydown=0;
     //---@@@
@@ -287,6 +292,44 @@ void Splice::printfeature(feature &f, ofstream &out){
     }
 }
 //---@@@
+
+myRect Splice::backSpace(){
+    cout<<"Deleting command called with currpos "<<currpos<< " and lastpro "<<lastpro<<endl;
+    myRect delArea;
+    if(currpos==-1) {cout<<"nothig to do"<<endl;/*do nothing as no strokes or character drawn till now*/}
+    else if(currpos==lastpro){ //Case when one lonely stroke in hand
+        cout<<"deleting last stroke with listsize"<<strokeList.size()<<endl;
+        //cout<<strokeList.size()<<endl;
+        Stroke temp=strokeList.back();
+        delArea.x1=temp.min_x;
+        delArea.y1=temp.min_y;
+        delArea.x2=temp.max_x;
+        delArea.y2=temp.max_y;
+
+        currpos--; strokeCount--;lastpro=lastpro ; //lastpro remains as it is
+        strokeList.pop_back(); //remove the deleted stroke from strokelist
+
+        //NOW to update the charactedList see if the last stroke is a part of the characterList as an individual character
+        if(temp.intocharlist==1){ //it is the last character formed so pop the last character
+            characterList.pop_back();
+        }
+
+        cout<<"DELETED last stroke NOW STROKELIST SIZE IS"<<strokeList.size()<<endl;
+    }
+    else if(currpos<lastpro){ //lastly character was formed and so no lone stroke ,, delete this character
+        cout<<"deleting last character with charllistsize "<<characterList.size()<<endl;
+        Character temp=characterList.back();
+        delArea.x1=temp.orgminx;
+        delArea.y1=temp.orgminy;
+        delArea.x2=temp.orgmaxx;
+        delArea.y2=temp.orgmaxy;
+        int strokesno = temp.getno();
+        currpos-=strokesno ;  strokeCount-=strokesno; lastpro-=strokesno; //update the counts
+        for(int i=0;i<strokesno;i++) { strokeList.pop_back();}
+        characterList.pop_back(); //pop one character
+    }
+    return delArea;
+}
 
 //helper
 /*for(  multimap<char,int>::iterator it = mymm.begin(), end = mymm.end(); it != end; it = mymm.upper_bound(it->first))

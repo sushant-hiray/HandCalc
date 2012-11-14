@@ -7,6 +7,7 @@ using namespace std;
 Stroke::Stroke(int id){
     strokeid=id;
     pathlength=0;
+    intocharlist=0;
 }
 
 void Stroke::updateStroke(){
