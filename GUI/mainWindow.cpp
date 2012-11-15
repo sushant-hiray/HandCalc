@@ -22,23 +22,35 @@ void  MainWindow::MainWindowMaker()
     QHBoxLayout *layout = new QHBoxLayout;
      if(val==1){ //make the evaluate screen
 
-         QPushButton *button = new QPushButton("Evaluate");
+         QPushButton *button = new QPushButton();
          button->setFixedWidth(70);
-         button->setFixedHeight(25);
+         button->setFixedHeight(70);
+         QIcon icon("Evaluate.jpg");
+         button->setIconSize((QSize(70,70)));
+         button->setIcon(icon);
 
-         QPushButton *button3 = new QPushButton("Reset");
+         QPushButton *button3 = new QPushButton();
          button3->setFixedWidth(70);
-         button3->setFixedHeight(25);
+         button3->setFixedHeight(70);
+         QIcon icon3("reset.jpg");
+         button3->setIconSize((QSize(70,70)));
+         button3->setIcon(icon3);
 
          output = new QLineEdit;
 
-         back = new QPushButton("Back");
+         back = new QPushButton();
          back->setFixedWidth(70);
-         back->setFixedHeight(25);
+         back->setFixedHeight(70);
+         QIcon iconB("back.gif");
+         back->setIconSize((QSize(70,70)));
+         back->setIcon(iconB);
 
-         undo=new QPushButton("UNDO");
+         undo=new QPushButton();
          undo->setFixedWidth(70);
-         undo->setFixedHeight(25);
+         undo->setFixedHeight(70);
+         QIcon iconU("undo.png");
+         undo->setIconSize((QSize(70,70)));
+         undo->setIcon(iconU);
 
 
          layout->addWidget(button);
@@ -220,6 +232,7 @@ void  MainWindow::MainWindowMaker()
  void MainWindow::Reset(){
      scribbleArea->Reset();
      scribbleArea->clearImage();
+     output->setText("");
 
      resetflag=0;
  }
