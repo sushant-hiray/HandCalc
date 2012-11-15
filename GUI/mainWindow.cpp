@@ -158,12 +158,19 @@ void  MainWindow::MainWindowMaker()
     //if(out=="1+2*3"){cout<<"matching \n";}
     cout<<"printing the ecpression " ;
      ArithmeticExpression a;
-     float ans;
+     pair<bool,float> ans;
      ans=a.evaluate(out);
-     cout<<"printing the ecpression " ;a.printExpression();
-     ostringstream buffer;
-     buffer<<ans;
-     string answer=buffer.str();
+     //cout<<"printing the ecpression " ;a.printExpression();
+     string answer;
+     if(ans.first==0) {
+         answer=" !!! Wrong Expression ";
+     }
+
+     else{
+         ostringstream buffer;
+         buffer<<ans.second;
+         answer=buffer.str();
+     }
      out.append(" = ");
      out.append(answer);
 

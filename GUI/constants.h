@@ -13,8 +13,8 @@ using namespace std;
 
 
 //constants for preprocessing
-#define Delta 0.20
-#define Threshold 0.5
+#define Delta 0.20      //constant to determine the characterstic of stroke
+#define Threshold 0.5   //to identify stroke
 struct Pt{
     float x;
     float y;
@@ -36,7 +36,7 @@ struct myRect{ //to tell which area to delete from the canvas when backspace ope
     }
 };
 
-void whitespace(ifstream& in);
+void whitespace(ifstream& in);      //remove whitespace character reading DataBase textfile
 void readDatabase(multimap<string,feature>& trainingData);
 void readXY(float& x,float& y,ifstream& in);
 

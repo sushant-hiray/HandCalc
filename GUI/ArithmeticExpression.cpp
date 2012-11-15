@@ -7,7 +7,7 @@
 
 using namespace std;
 
-bool ArithmeticExpression::isoperator(string op){				//returns true when a character is a operater
+bool ArithmeticExpression::isoperator(string op){				//returns true when a string is a operater
 	return ((op=="+")||(op=="-")||(op=="/")||(op=="*"));
 }
 
@@ -15,11 +15,11 @@ bool ArithmeticExpression::isoperator(char op){				//returns true when a charact
 	return ((op=='+')||(op=='-')||(op=='/')||(op=='*'));
 }
 
-bool ArithmeticExpression::isnumber(char num){
+bool ArithmeticExpression::isnumber(char num){              //returns true when a character is a number
 	return !isoperator(num);
 }
 
-bool ArithmeticExpression::isnumber(string num){
+bool ArithmeticExpression::isnumber(string num){            //returns true when a string is a number
 	return !isoperator(num);
 }
 
@@ -45,22 +45,52 @@ TreeNode1* ArithmeticExpression::makentree(TreeNode1& l, string op, TreeNode1& r
 	return T;
 }
 
-int getval(string x){
+int getval(string x){               //getval returns the integer according to priority giveb to a  operator(2(-) is lowest and 4(/) is highest)
     if(x=="/") return 4;
     else if(x=="*") return 3;
     else if(x=="+") return 2;
-    else return 1;
+    else return 2;
 }
-bool isAB(string a,string b){
+bool isAB(string a,string b){       //returns true if operator "a" prior to "b"
     if(getval(a)> getval(b)) {return true;}
     else return false;
 }
 
-vector<string> ArithmeticExpression::arrange(string str){
-	vector<string> Arranged_String;
+
+//arrange returns vector of strings.
+//e.g. "123+45-87/74" returns a vector comprises  "123":"+":"45":"-"87":"/":"74"
+pair<bool,vector<string> > ArithmeticExpression::arrange(string str){
+    bool continuous_two =false;
+    vector<string> Arranged_String;
+
+    if(isoperator(str[0]) || isoperator(str[str.size() -1]) || str==""){
+        return make_pair(false , Arranged_String);
+    }
+
+    int last_operator=1;
+    for(int i=1;i<str.size();i++){
+        if(isoperator(str[i])){
+            if (i - last_operator == 1){
+                continuous_two = true;
+                break;
+            }
+            else{
+                last_operator = i;
+            }
+        }
+    }
+
+    if(continuous_two){
+        return make_pair(false , Arranged_String);
+    }
+
+
+
+
 	int index=0;
 	
-	pair<bool,string> local;
+
+    pair<bool,string> local;
 	local.second = "";
 	local.first = false;
 	
@@ -79,19 +109,25 @@ vector<string> ArithmeticExpression::arrange(string str){
 		else{					//is a number
 			local.first =true;
 			local.second = local.second + str.substr(index,1);
-		}
+        }
 		index++;
 	}
 	if(local.first == true){
 		Arranged_String.push_back(local.second);
 	}
-	return Arranged_String;
+    return make_pair(true,Arranged_String);
 }
 
 
 
-void ArithmeticExpression::readExpression(string Input){				//function which reads input and makes a internal tree
-	vector<string> str = infix_to_postfix(arrange(Input));
+bool ArithmeticExpression::readExpression(string Input){				//function which reads infix input and makes a internal tree
+    //first arrange and then convert infix to postfix
+    pair<bool,vector<string> > arranged_str = arrange(Input);
+    if(!arranged_str.first){
+        return false;
+    }
+
+    vector<string> str = infix_to_postfix(arranged_str.second);
     for(int i=0;i<str.size();i++){
         cout<<str[i]<<" ";
     }
@@ -116,6 +152,8 @@ void ArithmeticExpression::readExpression(string Input){				//function which rea
 	}
 
 	btree=st.top();			//final tree would be on the top of stack
+
+    return true;
 }
 
 vector<string> ArithmeticExpression::infix_to_postfix(vector<string> to_be_evaluated){
@@ -128,7 +166,6 @@ vector<string> ArithmeticExpression::infix_to_postfix(vector<string> to_be_evalu
 			postfix.push_back(*infix_itr);
 		}
 		else{
-			//while(Operator_Holder.size() !=0 and !(isA_priorto_B(*infix_itr,Operator_Holder.top()))){
             while(Operator_Holder.size() !=0 and !(isAB(*infix_itr,Operator_Holder.top()))){
 				postfix.push_back(Operator_Holder.top());
 				Operator_Holder.pop();
@@ -162,10 +199,15 @@ void ArithmeticExpression::print(TreeNode1 v){		//helper funtion of printExpress
 	}
 }
 
-float ArithmeticExpression::evaluate(string expression){			//evluates the expression
-	readExpression(expression);
-    printExpression();
-	return eval(*btree);
+pair<bool,float> ArithmeticExpression::evaluate(string expression){			//evluates the expression
+    bool if_read = readExpression(expression);
+   // printExpression();
+    if(if_read){
+        return make_pair(true,eval(*btree));
+    }
+    else{
+        return make_pair(false,0);
+    }
 }
 
 float ArithmeticExpression::eval(TreeNode1 v){	

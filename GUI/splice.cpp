@@ -169,7 +169,8 @@ string Splice::lastCase(){
             multimap<string,feature>::iterator local_it = trainingData.find(s);
             for (int j=0;j<count ; ++local_it ,j++ ){
                // printfeature(local_it->second,trainingData);
-                float cost=DTW(characterList[i].sampledChar,local_it->second.vec);
+                DTW temp;
+                float cost=temp.warp(characterList[i].sampledChar,local_it->second.vec);
                 if(cost < mincost){
                     mincost=cost;
                     best=local_it->second.id;
@@ -221,7 +222,8 @@ void Splice::TrainingProgram(){
          multimap<string,feature>::iterator local_it = trainingData.find(reference);
          int count = trainingData.count(reference);
          for (int j=0;j<count ; ++local_it ,j++ ){
-             float cost=DTW(characterList[0].sampledChar,local_it->second.vec);
+             DTW temp;
+             float cost=temp.warp(characterList[0].sampledChar,local_it->second.vec);
              if(cost < mincost){
                  mincost=cost;
                  best=local_it->second.id;

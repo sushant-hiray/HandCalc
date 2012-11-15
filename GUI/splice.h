@@ -13,16 +13,16 @@ class Splice
 {
 
 private:
-    vector<Stroke> strokeList;
-    vector<Character> characterList;
-    list<string> Keys;
-    multimap<string,feature> trainingData;
+    vector<Stroke> strokeList;      //CONTAINER TO STORE STROKES
+    vector<Character> characterList;        //CONTAINER TO STORE CHARACTERS
+    list<string> Keys;              //LIST OF FEATURES
+    multimap<string,feature> trainingData;  //STORES ALL TRAINING DATA IN A MAP
     //bool modified;
     //bool scribbling;
-    bool strokeChanged;
-    int strokeCount;
-    int prevx,prevy;
-    string key;
+    bool strokeChanged; //  TELLS WHEATHER STROKE IS CHANGED OR NOT
+    int strokeCount;    //COUNT THE NO. OF STROKES
+    int prevx,prevy;    //
+    string key;        //
 
 
 
@@ -30,8 +30,8 @@ private:
     //vector<Character> characterList;
     int lastpro; //last stroke passed
     int currpos; //currpos
-    int yup;
-    int ydown;
+    int yup;    //
+    int ydown;  //
     int judge(int i,int j);// judges whether the two strokes i and j in strokelist belong to same character
     void charprocess();//judges and if allowed pushes a new character into the characterlist called in mouserelease event
     //NOTE will miss the last stroke if second last stroke already taken into a character so process the last stroke
@@ -46,16 +46,16 @@ public:
     void TrainingProgram();       //left to be written
     void changeKey(string text);
     myRect backSpace();  //delete last stroke(if alone) or last character(in no lonely stroke left)
-    int cgetMinx(int i);
-    int cgetMiny(int i);
-    int cgetMaxx(int i);
-    int cgetMaxy(int i);
-    int csize(){
+    int cgetMinx(int i);    //RETURNS MINIMUM X-COORDINATE OF A CHARACTER
+    int cgetMiny(int i);    //RETURNS MINIMUM Y-COORDINATE OF A CHARACTER
+    int cgetMaxx(int i);    //RETURNS MAXIMUM X-COORDINATE OF A CHARACTER
+    int cgetMaxy(int i);    //RETURNS MAXIMUM Y-COORDINATE OF A CHARACTER
+    int csize(){            //RETURNS THE SIZE OF characterList
         return characterList.size();
     }
-    void setStrokeChange();
-    void ResetData();
-    void writeMap();
+    void setStrokeChange();     //IT IGNORES STRAY STROKES AND PROCESS THE PREVIOUS STROKE
+    void ResetData();           //RESETSS ALL THE DATA OF THIS OBJECT TO THEIR DEFAULT VALUE
+    void writeMap();            //WRITES THE FEATURE VECTOR TO DATABASE FILE
     void printfeature(feature& f,ofstream &out);
 
 };

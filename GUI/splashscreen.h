@@ -8,18 +8,18 @@
 #include "mainWindow.h"
 
 class MainWindow;
-class splashScreen :public QMainWindow
+class splashScreen :public QMainWindow      //class derived from mainWindow
 {
     Q_OBJECT
 
 private:
     MainWindow* window;
-    MainWindow* trainingWindow;
-    QPushButton *button;
-    QPushButton *button2;
+    MainWindow* trainingWindow; //shows training window
+    QPushButton *button;        //Button to ENTER EVALUATE WINDOW
+    QPushButton *button2;       //ENTER IN TRAINING WINDOW
 public:
-    splashScreen();
-    void setParam(MainWindow* a,MainWindow* b);
+    splashScreen();     //CONSTRUCTOR
+    void setParam(MainWindow* a,MainWindow* b);     //PARAMERTER IS SET TO ENTER IN DESIRED WINDOW
 };
 
 #endif // SPLASHSCREEN_H
