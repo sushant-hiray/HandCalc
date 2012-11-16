@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'splashscreen.h'
 **
-** Created: Fri Nov 16 17:12:46 2012
+** Created: Fri Nov 16 19:44:41 2012
 **      by: The Qt Meta Object Compiler version 63 (Qt 4.8.1)
 **
 ** WARNING! All changes made in this file will be lost!
