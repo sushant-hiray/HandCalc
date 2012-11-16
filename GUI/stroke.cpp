@@ -4,13 +4,13 @@
 #include <cstdio>
 #include "qpainter.h"
 using namespace std;
-Stroke::Stroke(int id){
+Stroke::Stroke(int id){   //default constructor
     strokeid=id;
     pathlength=0;
     intocharlist=0;
 }
 
-void Stroke::updateStroke(){
+void Stroke::updateStroke(){   //updates the stroke information once the stroke is complete
     int tempminx=stroke[0].x;
     int tempminy=stroke[0].y;
     int tempmaxx=stroke[0].x;
@@ -41,7 +41,7 @@ void Stroke::updateStroke(){
     cout<<"Orientation is "<<orientation<<endl;
 }
 
-void Stroke::updateSampleStroke(){
+void Stroke::updateSampleStroke(){   //update stroke information of the sampled stroke
     int tempminx=sampled[0].x;
     int tempminy=sampled[0].y;
     int tempmaxx=sampled[0].x;
@@ -64,7 +64,7 @@ void Stroke::updateSampleStroke(){
     min_y=tempminy;
     max_x=tempmaxx;
     max_y=tempmaxy;
-    orientation=findOrientation(Delta);
+    orientation=findOrientation(Delta);  //correct the orientation of the stroke
     if(orientation==0){
         if(sampled[0].x < sampled[sampled.size()-1].x){
             directionflag=1;
@@ -106,7 +106,7 @@ void Stroke::updateSampleStroke(){
     cout<<"Direction is "<<directionflag<<endl;
 }
 
-void Stroke::push(int x, int y, int time){
+void Stroke::push(int x, int y, int time){  //push point into the stroke vector
     Point temp;
     temp.x=x;
     temp.y=y;
@@ -114,7 +114,7 @@ void Stroke::push(int x, int y, int time){
     stroke.push_back(temp);
 }
 
-int Stroke::abs(int a){
+int Stroke::abs(int a){  //absolute of a point
     if(a>0){
         return a;
     }
@@ -123,7 +123,7 @@ int Stroke::abs(int a){
     }
 }
 
-int Stroke::findOrientation(float delta){
+int Stroke::findOrientation(float delta){  //finds orientation wrt a given delta
     int tempx=abs(sampled[0].x-sampled[sampled.size()-1].x);
     int tempy=abs(sampled[0].y-sampled[sampled.size()-1].y);
     float diagonal=sqrt(pow(max_x-min_x,2) + pow(max_y-min_y,2));
@@ -147,11 +147,11 @@ int Stroke::findOrientation(float delta){
 
 }
 
-float Stroke::distance(Pt a,Pt b){
+float Stroke::distance(Pt a,Pt b){  //find distance between 2 points
     return sqrt(pow(b.x-a.x,2)+pow(b.y-a.y,2));
 }
 
-void Stroke::findnext(Pt &prev,Pt &next,float dist,int &pointer ){
+void Stroke::findnext(Pt &prev,Pt &next,float dist,int &pointer ){  //find next point to be inserted in the samoked vector
     float tempdist=distance(next,prev);
     Pt newpoint;
     if(tempdist>dist){
@@ -174,11 +174,11 @@ void Stroke::findnext(Pt &prev,Pt &next,float dist,int &pointer ){
     }
 }
 
-void Stroke::pushsampled(Pt a){
+void Stroke::pushsampled(Pt a){// push point into sampled vector
     sampled.push_back(a);
 }
 
-void Stroke::sampleStroke(){
+void Stroke::sampleStroke(){  //sample the original stroke vector
     float step=pathlength/(SR - 1);
     int pointer=0;
     Pt prev,next;
@@ -195,16 +195,16 @@ void Stroke::sampleStroke(){
 
 }
 
-void Stroke::printSample(){
+void Stroke::printSample(){  //print the sampled stroke used for debugging
     for (int i=0;i<sampled.size();i++){
         cout<<"sampl no: "<<i<<" x is "<<sampled[i].x<<" y is "<<sampled[i].y<<endl;
     }
 }
 
-Pt Stroke::getPoint(int i){
+Pt Stroke::getPoint(int i){  //gets point at position i
     return sampled[i];
 }
 
-void Stroke::setPoint(Pt point,int i){
+void Stroke::setPoint(Pt point,int i){  //sets point at position i
     sampled[i]=point;
 }
