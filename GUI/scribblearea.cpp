@@ -5,7 +5,7 @@
 using namespace std;
 
 
- ScribbleArea::ScribbleArea(QWidget *parent)
+ ScribbleArea::ScribbleArea(QWidget *parent)  //default constructor
      : QWidget(parent)
  {
      setAttribute(Qt::WA_StaticContents);
@@ -19,36 +19,34 @@ using namespace std;
  }
 
 
- void ScribbleArea::setPenColor(const QColor &newColor)
+ void ScribbleArea::setPenColor(const QColor &newColor)   //sets pen color
  {
      myPenColor = newColor;
  }
 
- void ScribbleArea::setPenWidth(int newWidth)
+ void ScribbleArea::setPenWidth(int newWidth)   //sets pen width
  {
      myPenWidth = newWidth;
  }
 
- void ScribbleArea::mousePressEvent(QMouseEvent *event)
+ void ScribbleArea::mousePressEvent(QMouseEvent *event)   //handles mouse press event
  {
-     cout<<"pressed \n";
-     //return;
      bool lastScribble = scribbling;
-     if (event->button() == Qt::LeftButton) {
+     if (event->button() == Qt::LeftButton) {  //if left button is pressed then proceed
          lastPoint = event->pos();
          scribbling = true;
          BB.pushStrokePoint(event->x(),event->y(),myTimer.elapsed());
       }
  }
 
- void ScribbleArea::mouseMoveEvent(QMouseEvent *event)
+ void ScribbleArea::mouseMoveEvent(QMouseEvent *event)   //handles mouse move event
  {
      if ((event->buttons() & Qt::LeftButton) && scribbling){
          drawLineTo(event->pos());
      }
  }
 
- void ScribbleArea::mouseReleaseEvent(QMouseEvent *event)
+ void ScribbleArea::mouseReleaseEvent(QMouseEvent *event)   //handles mouse release event
  {
      if (event->button() == Qt::LeftButton && scribbling) {
          BB.setStrokeChange();
@@ -57,14 +55,14 @@ using namespace std;
      }
  }
 
- void ScribbleArea::paintEvent(QPaintEvent *event)
+ void ScribbleArea::paintEvent(QPaintEvent *event)     //handles paint event
  {
      QPainter painter(this);
      QRect dirtyRect = event->rect();
      painter.drawImage(dirtyRect, image, dirtyRect);
  }
 
- void ScribbleArea::resizeEvent(QResizeEvent *event)
+ void ScribbleArea::resizeEvent(QResizeEvent *event)   //handles window resize event
  {
      if (width() > image.width() || height() > image.height()) {
          int newWidth = qMax(width() + 128, image.width());
@@ -75,7 +73,7 @@ using namespace std;
      QWidget::resizeEvent(event);
  }
 
- void ScribbleArea::clearImage()
+ void ScribbleArea::clearImage()  //clear image handler
   {
       image.fill(qRgb(255, 255, 255));
       modified = true;
@@ -87,7 +85,7 @@ using namespace std;
      cout<<"Button clicked"<<endl;
  }
 
- void ScribbleArea::drawLineTo(const QPoint &endPoint)
+ void ScribbleArea::drawLineTo(const QPoint &endPoint) //is called if the user input speed is fast and two pixels detected by the Qt arent consecutive
  {
      QPainter painter(&image);
      painter.setPen(QPen(myPenColor, myPenWidth, Qt::SolidLine, Qt::RoundCap,
@@ -102,24 +100,16 @@ using namespace std;
      lastPoint = endPoint;
      if(lastPoint!=temp)
      {
-         //strokeList[strokeCount].push(lastPoint.x(),lastPoint.y(),myTimer.elapsed());
          BB.pushStrokePoint(lastPoint.x(),lastPoint.y(),myTimer.elapsed());
-         //cout<<"Moving "<<lastPoint.x() <<" "<<lastPoint.y()<<" "<<myTimer.elapsed()<<endl;
      }
  }
 
- string ScribbleArea::updateRect(){
+ string ScribbleArea::updateRect(){   //draws bounding box among all characters
      string out=BB.lastCase();
 
 
      QPainter painter(&image);
 
-     /*
-     for(int i=0;i < strokeList.size();i++){
-         painter.drawRect(strokeList[i].getMinx(),strokeList[i].getMiny(),strokeList[i].getMaxx() - strokeList[i].getMinx(),strokeList[i].getMaxy()-strokeList[i].getMiny());
-
-     }
-     */
      for(int i=0;i < BB.csize();i++){
 
          painter.drawRect(BB.cgetMinx(i),BB.cgetMiny(i),BB.cgetMaxx(i) - BB.cgetMinx(i),BB.cgetMaxy(i)-BB.cgetMiny(i));
@@ -134,7 +124,7 @@ using namespace std;
 
  }
 
- void ScribbleArea::addTrainingData(QString Text){
+ void ScribbleArea::addTrainingData(QString Text){  //add new training data
 
      char str[100];
      strcpy(str, Text.toAscii().data());
@@ -146,23 +136,17 @@ using namespace std;
 
      QPainter painter(&image);
 
-     /*
-     for(int i=0;i < strokeList.size();i++){
-         painter.drawRect(strokeList[i].getMinx(),strokeList[i].getMiny(),strokeList[i].getMaxx() - strokeList[i].getMinx(),strokeList[i].getMaxy()-strokeList[i].getMiny());
-
-     }
-     */
-     for(int i=0;i < BB.csize();i++){
+       for(int i=0;i < BB.csize();i++){
          painter.drawRect(BB.cgetMinx(i),BB.cgetMiny(i),BB.cgetMaxx(i) - BB.cgetMinx(i),BB.cgetMaxy(i)-BB.cgetMiny(i));
 
      }
 
-     update();
+     update();  //updates the canvas
 
  }
 
 
- void ScribbleArea::resizeImage(QImage *image, const QSize &newSize)
+ void ScribbleArea::resizeImage(QImage *image, const QSize &newSize)   //resizes the image
  {
      if (image->size() == newSize)
          return;
@@ -174,15 +158,15 @@ using namespace std;
      *image = newImage;
  }
 
- void ScribbleArea::finishTrain(){
+ void ScribbleArea::finishTrain(){   //calls the splice to fininsh rh training
      BB.writeMap();
  }
 
- void ScribbleArea::Reset(){
+ void ScribbleArea::Reset(){   //Reset the input canvas
      BB.ResetData();
  }
 
- void  ScribbleArea::undoAction(){
+ void  ScribbleArea::undoAction(){   //undo the previous character from the canvas
      myRect delArea=  BB.backSpace();
      cout<<"deleting in the range" << delArea.x1 <<" "<<delArea.y1<<" "<<delArea.x2<<" "<<delArea.y2<<endl;
      QPainter painter(&image);

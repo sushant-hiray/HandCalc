@@ -30,7 +30,7 @@ class ArithmeticExpression{
     //e.g. "123+45-87/74" returns a vector comprises  "123":"+":"45":"-"87":"/":"74"
     pair<bool,vector<string> > arrange(string str);
 
-    //takes input from output of arrange and converts into its postfix expression and returns vector of strings
+    //takes input from output of arrange and converts into its postfitypenamex expression and returns vector of strings
     //e.g."123":"+":"45"  reurns   "123":"45":"+"
     vector<string> infix_to_postfix(vector<string> to_be_evaluated);
 	

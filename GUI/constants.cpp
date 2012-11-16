@@ -2,7 +2,7 @@
 #include <iostream>
 using namespace std;
 
-void whitespace(ifstream& in){
+void whitespace(ifstream& in){   //whitespace parser (file reading)
     char c=in.get();
     while((c==' '|| c== '\n' || c=='\t' ) && c!=EOF){
         c=in.get();
@@ -10,7 +10,7 @@ void whitespace(ifstream& in){
     in.putback(c);
 }
 
-void readXY(float& x,float& y,ifstream& in){
+void readXY(float& x,float& y,ifstream& in){  //reading the x and y coordinate of a point
     char c=in.get();
     in>>x;
     c=in.get();
@@ -18,7 +18,7 @@ void readXY(float& x,float& y,ifstream& in){
     c=in.get();
 }
 
-void readDatabase(multimap<string,feature>& trainingData){
+void readDatabase(multimap<string,feature>& trainingData){   //reads the complete database from database.txt
     cout<<"entered\n";
     ifstream data;
     data.open("DataBase.txt");

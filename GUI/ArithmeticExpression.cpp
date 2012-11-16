@@ -63,11 +63,12 @@ pair<bool,vector<string> > ArithmeticExpression::arrange(string str){
     bool continuous_two =false;
     vector<string> Arranged_String;
 
-    if(isoperator(str[0]) || isoperator(str[str.size() -1]) || str==""){
+    if(isoperator(str[0]) || isoperator(str[str.size() -1]) || str==""){    //isoperator returns true if char is '+','-','*' or '/'
+        cout<<"in arrange 1"<<endl;
         return make_pair(false , Arranged_String);
     }
 
-    int last_operator=1;
+    int last_operator=-1;
     for(int i=1;i<str.size();i++){
         if(isoperator(str[i])){
             if (i - last_operator == 1){
@@ -99,7 +100,7 @@ pair<bool,vector<string> > ArithmeticExpression::arrange(string str){
 			local.first = true;
 			local.second = str.substr(index,1);
 		}
-		else if(isoperator(str[index])){//is operator
+        else if(isoperator(str[index])){  //is operator returns true if char is '+','-','*' or '/'
 			Arranged_String.push_back(local.second);
 			local.first = false;
 			local.second = "";
@@ -124,10 +125,11 @@ bool ArithmeticExpression::readExpression(string Input){				//function which rea
     //first arrange and then convert infix to postfix
     pair<bool,vector<string> > arranged_str = arrange(Input);
     if(!arranged_str.first){
+        cout<<"after arrange"<<endl;
         return false;
     }
 
-    vector<string> str = infix_to_postfix(arranged_str.second);
+    vector<string> str = infix_to_postfix(arranged_str.second);  //infix_to_postfix converts into its postfix expression and returns vector of strings
     for(int i=0;i<str.size();i++){
         cout<<str[i]<<" ";
     }
@@ -156,13 +158,13 @@ bool ArithmeticExpression::readExpression(string Input){				//function which rea
     return true;
 }
 
-vector<string> ArithmeticExpression::infix_to_postfix(vector<string> to_be_evaluated){
+vector<string> ArithmeticExpression::infix_to_postfix(vector<string> to_be_evaluated){ //takes input from output of arrange and converts into its postfix expression and returns vector of strings
 	
 	vector<string> postfix;
 	stack<string> Operator_Holder;
 	typename vector<string>::iterator infix_itr = to_be_evaluated.begin();
 	while(infix_itr != to_be_evaluated.end()){
-		if(!isoperator(*infix_itr)){
+        if(!isoperator(*infix_itr)){  //isoperator returns true if char is '+','-','*' or '/'
 			postfix.push_back(*infix_itr);
 		}
 		else{
@@ -201,7 +203,7 @@ void ArithmeticExpression::print(TreeNode1 v){		//helper funtion of printExpress
 
 pair<bool,float> ArithmeticExpression::evaluate(string expression){			//evluates the expression
     bool if_read = readExpression(expression);
-   // printExpression();
+    //printExpression();
     if(if_read){
         return make_pair(true,eval(*btree));
     }
@@ -221,5 +223,6 @@ float ArithmeticExpression::eval(TreeNode1 v){
 	else if(v.val=="-") {return ((float)(eval(*(v.ltree)) - eval(*(v.rtree))));}
 	else if(v.val=="*") {return ((float)(eval(*(v.ltree)) * eval(*(v.rtree))));}
 	else if(v.val=="/") {return ((float)(eval(*(v.ltree)) / eval(*(v.rtree))));}
+    else return -1;
 
 }

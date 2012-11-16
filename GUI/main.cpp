@@ -10,19 +10,14 @@ int main(int argc, char *argv[])
     splashScreen* screen;
     MainWindow* window;
     MainWindow* trainingWindow;
-    screen = new splashScreen();
-    window = new MainWindow();
+    screen = new splashScreen(); //create a new splashscreen
+    window = new MainWindow();   //create 2 window instances corresponding to training and evaluation
     trainingWindow = new MainWindow();
     screen->setParam(window,trainingWindow);
-
-    //
     window->setParameter(1,screen);
-   window->MainWindowMaker();
-    //
+    window->MainWindowMaker();
     trainingWindow->setParameter(2,screen);
-    //cout<<"reached\n";
     trainingWindow->MainWindowMaker();
-    //screen->setParam(window,trainingWindow);
     screen->show();
     return app.exec();
 }

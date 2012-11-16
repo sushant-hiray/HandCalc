@@ -4,11 +4,11 @@ using namespace std;
 Character::Character()
 {
 }
-int Character::getno(){
+int Character::getno(){  //total strokes
     return slist.size();
 }
 
-void Character::print(){
+void Character::print(){  //prints stroke list
     cout<<"(";
     for (int i=0;i<slist.size();i++){
         cout<<slist[i].getid()<<",";
@@ -16,7 +16,7 @@ void Character::print(){
     cout<<") ";
 }
 
-void Character::push(Stroke x){
+void Character::push(Stroke x){ //insert a new stroke
     if(slist.empty()) {minx=x.getMinx();miny=x.getMiny();maxx=x.getMaxx();maxy=x.getMaxy();
         cout<<minx<<" "<<maxx<<endl;
     }
@@ -29,7 +29,7 @@ void Character::push(Stroke x){
     slist.push_back(x);
 }
 
-void Character::reorderStrokes(){
+void Character::reorderStrokes(){   //reorder strokes according to direction
     for(int i=0; i <slist.size();i++){
         if(slist[i].directionflag==1){
             continue;
@@ -64,7 +64,7 @@ int Character::setPreference(){     //1- prefrence is correct by default , 0 - c
     }
 }
 
-void Character::process_character(){
+void Character::process_character(){  //processing of character sampling and then scaling
      int size = slist.size();
      reorderStrokes();
      if(size == 1){
@@ -96,7 +96,7 @@ void Character::process_character(){
       }
 }
 
-void Character::ScaleCharacter(){
+void Character::ScaleCharacter(){   //scaling the character to 1x1 square
     float length=maxx-minx;
     float width=maxy-miny;
     float ratio;
@@ -124,13 +124,13 @@ void Character::ScaleCharacter(){
     cout<<minx<<" "<<maxx<<" "<<miny<<" "<<maxy<<endl;
 }
 
-void Character::printScaledSample(){
+void Character::printScaledSample(){   //used for debugging
     for(int i=0;i<sampledChar.size();i++){
         cout<<"( "<<sampledChar[i].x<<" , "<<sampledChar[i].y<<" )"<<endl;
     }
 }
 
-bool lineoutput(float slope,float c,float x,float y){
+bool lineoutput(float slope,float c,float x,float y){  //checks if a point lies to left or right of a line
     float ref;
     ref=slope*x-y+c;
     if(c==0){
@@ -150,7 +150,7 @@ bool lineoutput(float slope,float c,float x,float y){
     }
 }
 
-string Character::preprocessing(){
+string Character::preprocessing(){   //returns the key value after processing the character
     string finalValue;
     int Strokeno=slist.size();
     if(Strokeno==1){
@@ -159,7 +159,7 @@ string Character::preprocessing(){
             finalValue="H1";             //horizontal
             return finalValue;
         }
-        if(orientation==1){
+        if(orientation==1){           //vertical stroke
             cout<<"abc"<<endl;
             //vertical
             float fraction=2;
@@ -168,7 +168,7 @@ string Character::preprocessing(){
                 cout<<"sampled "<<sampledChar[0].x<<" "<<sampledChar[sampledChar.size()-1].x<<" "<<minx<<" "<<maxx<<endl;
                 float leftcount=0;
                 float rightcount=0;
-                if(sampledChar[0].x==sampledChar[sampledChar.size()-1].x){
+                if(sampledChar[0].x==sampledChar[sampledChar.size()-1].x){   //finding the number of points which lie to left and right
                     cout<<"qwe"<<endl;
                     for(int q=0;q<sampledChar.size();q++){
 
@@ -220,14 +220,14 @@ string Character::preprocessing(){
                      cout<<"fraction is "<<fraction<<endl;
                     float g=0.2;
                     float h=0.8;
-                    if(fraction < g || fraction > h){
+                    if(fraction < g || fraction > h){  //Type V1
                         finalValue="V1";
                     }
-                    else if(fraction < 0.37 ){
+                    else if(fraction < 0.37 ){   //Type V2
                         finalValue="V2";
                     }
                     else{
-                        finalValue="V3";
+                        finalValue="V3";   //Type V3
                     }
 
 
@@ -247,7 +247,7 @@ string Character::preprocessing(){
                 return finalValue;
             }
         }
-        if(orientation==2){               //diagonal
+        if(orientation==2){               //diagonal stroke
             if(sampledChar[0].y < sampledChar[sampledChar.size()-1].y){
                 finalValue="D1";
                 return finalValue;
@@ -257,43 +257,43 @@ string Character::preprocessing(){
                 return finalValue;
             }
         }
-        if(orientation==3){              //closed loop
+        if(orientation==3){              //closed loop stroke
             finalValue="L1";
             return finalValue;
         }
     }
-    else{
+    else{  // character consists of 2 strokes
         int orientation1=slist[0].getOrientation();
         int orientation2=slist[1].getOrientation();
-        if(orientation1==1 && orientation2==1){
+        if(orientation1==1 && orientation2==1){  //both are vertical
             finalValue="VV";
             return finalValue;
         }
-        else if(orientation1==0 && orientation2==0){
+        else if(orientation1==0 && orientation2==0){  //both are horizontal
             finalValue="HH";
             return finalValue;
         }
-        else if(orientation1==2 && orientation2==2){
+        else if(orientation1==2 && orientation2==2){  //both are diagonal
             finalValue="DD";
             return finalValue;
         }
-        else if(orientation1==3 && orientation2==3){
+        else if(orientation1==3 && orientation2==3){ //both are looped
             finalValue="LL";
             return finalValue;
         }
-        else if(orientation1+orientation2==1){
+        else if(orientation1+orientation2==1){  //1-horizontal and 1-vertical
             finalValue="HV";
             return finalValue;
         }
-        else if(orientation1*orientation2==0){
+        else if(orientation1*orientation2==0){  //1-horizontal and 1--diagonal
             finalValue="HD";
             return finalValue;
         }
-        else if(orientation1*orientation2==2){
+        else if(orientation1*orientation2==2){   //1-vertical and 1-diagonal
             finalValue="VD";
             return finalValue;
         }
-        else if(orientation1*orientation2==3){
+        else if(orientation1*orientation2==3){   //1 vertical and 1-loop
             finalValue="VL";
             return finalValue;
         }

@@ -1,18 +1,19 @@
 #include "splice.h"
 #include <cmath>
 
-Splice::Splice()
+Splice::Splice()   //default constructor
 {
     //scribbling = false;
     strokeChanged = true;
     strokeCount =-1;
 
-    //@@@   for characterlist
+    // for characterlist
     lastpro=0;
     currpos=-1;
     yup=10000;
     ydown=0;
-    //---@@@
+    //
+    //push keys into the keylist
     Keys.push_back("H1");
     Keys.push_back("V1");
     Keys.push_back("V2");
@@ -33,14 +34,9 @@ Splice::Splice()
    readDatabase(trainingData);
 }
 
-/*void Splice::readDatabase(){
-    ifstream read;
-    read.open("DataBase.txt"); */
 
 
-
-
-void Splice::pushStrokePoint(int x, int y, long t){
+void Splice::pushStrokePoint(int x, int y, long t){   //push stroke point in the stroke vector
     if(y<yup) yup=y;
     if(y>ydown) ydown=y;
     if(strokeChanged==true){
@@ -57,7 +53,7 @@ void Splice::pushStrokePoint(int x, int y, long t){
     }
 }
 
-void Splice::setStrokeChange(){
+void Splice::setStrokeChange(){  //new stroke input!
     float StrayStrokeLength = 20.0;
     if(strokeCount >= 0){
         cout<< "path length of stroke is" <<strokeList[strokeCount].getpathlength() << endl;
@@ -70,10 +66,10 @@ void Splice::setStrokeChange(){
         strokeList.pop_back();
         return;
     }
-    //strokeList[strokeCount].updateStroke();
+    //update previous Stroke
     strokeList[strokeCount].sampleStroke();
     strokeList[strokeCount].updateSampleStroke();
-    currpos=strokeCount; //cout<<"strokecoutn is............................."<<strokeCount<<endl;
+    currpos=strokeCount; //cout<<"stroke count  is "<<strokeCount<<endl;
     charprocess();
     cout<<"charprocessing done wiht stokelist size"<< strokeList.size()<<"charaaterlist size "<<characterList.size()<< " currpos" <<currpos<<"lastpro "<<lastpro<<endl;
     //---@@@
@@ -83,7 +79,7 @@ void Splice::setStrokeChange(){
 //@@@
 int Splice::judge(int i,int j){
      float delta=(ydown-yup)*(0.1);
-     //cout<<"DELATA............"<<delta<<" "<<ydown<< " "<<yup<<"  VV.."<<i<<" "<<j<<strokeList[j].getMinx()<<" "<<strokeList[i].getMaxx()<<endl;
+     //cout<<"delta values "<<delta<<" "<<ydown<< " "<<yup<<"  VV.."<<i<<" "<<j<<strokeList[j].getMinx()<<" "<<strokeList[i].getMaxx()<<endl;
      if (delta < strokeList[i].getMinx()-strokeList[j].getMaxx()){
          //stroke boxes are seperated by more than delta
          return 1; //means 1st stroke can be treated as character
@@ -133,7 +129,7 @@ void Splice::charprocess(){
 }
 
 string Splice::lastCase(){
-    if(lastpro>currpos) ;//cout<<"WE are done ^^^^^^^^^^^^^^^^^^^^^^^^\n";//we are done as last go coupled with sec-last
+    if(lastpro>currpos) ;//cout<<"WE are done \n";//we are done as last go coupled with sec-last
          else{
         cout<<"lastCase "<<lastpro<<" "<<currpos<<endl;
              Character temp;
@@ -146,7 +142,6 @@ string Splice::lastCase(){
          }
          //---@@@ END CASE HANDLED
 
-         //strokeList[strokeList.size()-1].updateSampleStroke();
          cout<<"Printing characters formed \n no of characters ="<< characterList.size();
          for(int i=0;i<characterList.size();i++){
              characterList[i].print();
@@ -164,11 +159,8 @@ string Splice::lastCase(){
             s=characterList[i].preprocessing();
             cout<<"preprocessed "<< s<<endl;
             int count = trainingData.count(s);
-            //pair<string,feature>::iterator trainingData.find(*i);
-            //DataBase<<(*i)<< ":\n";
             multimap<string,feature>::iterator local_it = trainingData.find(s);
             for (int j=0;j<count ; ++local_it ,j++ ){
-               // printfeature(local_it->second,trainingData);
                 DTW temp;
                 float cost=temp.warp(characterList[i].sampledChar,local_it->second.vec);
                 if(cost < mincost){
@@ -180,27 +172,27 @@ string Splice::lastCase(){
             output.append(best);
         }
          cout<<"final Result is "<<output<<endl;
-         //ResetData();
+         //Reset previous Data
          cout<<characterList.size()<<" "<<strokeList.size()<<endl;
         return output;
 
 }
 
-void Splice::changeKey(string text){
+void Splice::changeKey(string text){  //changes key of a given character
     key=text;
 }
 
-void Splice::TrainingProgram(){
-    if(lastpro>currpos) ;//cout<<"WE are done ^^^^^^^^^^^^^^^^^^^^^^^^\n";//we are done as last go coupled with sec-last
+void Splice::TrainingProgram(){   //training data
+    if(lastpro>currpos) ;//we are done as last go coupled with sec-last
          else{
              Character temp;
              temp.push(strokeList[strokeList.size()-1]);
              temp.process_character();
              characterList.push_back(temp);
          }
-         //---@@@ END CASE HANDLED
+         //END CASE HANDLED
 
-         //strokeList[strokeList.size()-1].updateSampleStroke();
+         //updateSampleStroke
          cout<<"Hello.....now printing about characters formed \n no of characters ="<< characterList.size();
          for(int i=0;i<characterList.size();i++){
              characterList[i].print();
@@ -229,11 +221,11 @@ void Splice::TrainingProgram(){
                  best=local_it->second.id;
              }
          }
-         if(best == key){
+         if(best == key){  //the match found is correct so need to improve database
              cout<<"No need of inserting Training Data for "<<reference<<" with reference value "<<key<<endl;
          }
 
-         else{
+         else{  //match found is incorrect update dataset
              trainingData.insert(make_pair(reference,temp));
              cout<<"Inserted new Training Data for "<<reference<<" with reference value "<<key<<endl;
          }
@@ -241,7 +233,7 @@ void Splice::TrainingProgram(){
          ResetData();
 }
 
-void Splice::writeMap(){
+void Splice::writeMap(){   //after training is complete write all new data into the database
     ofstream DataBase("DataBase.txt");
     for(list<string>::iterator i=Keys.begin();i!=Keys.end();i++){
         int count = trainingData.count(*i);
@@ -256,7 +248,7 @@ void Splice::writeMap(){
     DataBase<<"end";
 }
 
-void Splice::ResetData(){
+void Splice::ResetData(){   //Reset the data remove previous stroke from character list
     if(!strokeList.empty()){
         strokeList.erase(strokeList.begin(),strokeList.end());
     }
@@ -274,16 +266,16 @@ void Splice::ResetData(){
     //---@@@
 }
 
-int Splice::cgetMinx(int i){
+int Splice::cgetMinx(int i){   //returns minimum x of character
     return characterList[i].getMinx();
 }
 int Splice::cgetMiny(int i){
-    return characterList[i].getMiny();
+    return characterList[i].getMiny(); //returns minimum y of character
 }
 int Splice::cgetMaxx(int i){
-    return characterList[i].getMaxx();
+    return characterList[i].getMaxx();  //returns maximum x of character
 }
-int Splice::cgetMaxy(int i){
+int Splice::cgetMaxy(int i){  //returns maximum y of character
     return characterList[i].getMaxy();
 }
 
@@ -298,10 +290,10 @@ void Splice::printfeature(feature &f, ofstream &out){
 myRect Splice::backSpace(){
     cout<<"Deleting command called with currpos "<<currpos<< " and lastpro "<<lastpro<<endl;
     myRect delArea;
-    if(currpos==-1) {cout<<"nothig to do"<<endl;/*do nothing as no strokes or character drawn till now*/}
+    if(currpos==-1) {cout<<"nothig to do"<<endl;
+        /*do nothing as no strokes or character drawn till now*/}
     else if(currpos==lastpro){ //Case when one lonely stroke in hand
         cout<<"deleting last stroke with listsize"<<strokeList.size()<<endl;
-        //cout<<strokeList.size()<<endl;
         Stroke temp=strokeList.back();
         delArea.x1=temp.min_x;
         delArea.y1=temp.min_y;
@@ -332,10 +324,3 @@ myRect Splice::backSpace(){
     }
     return delArea;
 }
-
-//helper
-/*for(  multimap<char,int>::iterator it = mymm.begin(), end = mymm.end(); it != end; it = mymm.upper_bound(it->first))
-  {
-      cout << it->first << ' ' << it->second << endl;
-  }
-*/

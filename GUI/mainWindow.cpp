@@ -4,9 +4,10 @@
 #include "scribblearea.h"
 #include <iostream>
 #include<sstream>
+#include <QPalette>
 using namespace std;
 
-MainWindow::MainWindow(){
+MainWindow::MainWindow(){   //default constructor
     scribbleArea = new ScribbleArea;
     setCentralWidget(scribbleArea);
     createActions();
@@ -17,72 +18,71 @@ MainWindow::MainWindow(){
     resize(500, 500);
 }
 
-void  MainWindow::MainWindowMaker()
+void  MainWindow::MainWindowMaker()   //creation of GUI of window
  {
     QHBoxLayout *layout = new QHBoxLayout;
      if(val==1){ //make the evaluate screen
 
-         QPushButton *button = new QPushButton();
+         //create various buttons as required
+         QPushButton *button = new QPushButton("Evaluate");
          button->setFixedWidth(70);
          button->setFixedHeight(70);
          QIcon icon("Evaluate.jpg");
          button->setIconSize((QSize(70,70)));
          button->setIcon(icon);
+         button->setStyleSheet(" border: 2px solid #8f8f91; "  "background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,stop: 0 #2198c0, stop: 1 #0d5ca6);" "border-radius: 6px; " "min-width: 80px ");
 
-         QPushButton *button3 = new QPushButton();
+         QPushButton *button3 = new QPushButton("Reset");
          button3->setFixedWidth(70);
          button3->setFixedHeight(70);
-         QIcon icon3("reset.jpg");
-         button3->setIconSize((QSize(70,70)));
-         button3->setIcon(icon3);
-
+         button3->setStyleSheet(" border: 2px solid #8f8f91; "   "background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,stop: 0 #2198c0, stop: 1 #0d5ca6);" "border-radius: 6px; " "min-width: 80px ");
          output = new QLineEdit;
 
-         back = new QPushButton();
+         back = new QPushButton("Back");
          back->setFixedWidth(70);
          back->setFixedHeight(70);
-         QIcon iconB("back.gif");
-         back->setIconSize((QSize(70,70)));
-         back->setIcon(iconB);
+         back->setStyleSheet(" border: 2px solid #8f8f91; " "background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,stop: 0 #2198c0, stop: 1 #0d5ca6);" "border-radius: 6px; " "min-width: 80px ");
 
-         undo=new QPushButton();
+         undo=new QPushButton("Undo");
          undo->setFixedWidth(70);
          undo->setFixedHeight(70);
-         QIcon iconU("undo.png");
-         undo->setIconSize((QSize(70,70)));
-         undo->setIcon(iconU);
+         undo->setStyleSheet(" border: 2px solid #8f8f91; "   "background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,stop: 0 #2198c0, stop: 1 #0d5ca6);" "border-radius: 6px; " "min-width: 80px ");
 
-
+        //adding buttons to layout
          layout->addWidget(button);
          layout->addWidget(button3);
          layout->addWidget(back);
          layout->addWidget(undo);
          layout->addWidget(output);
 
-         //scribbleArea->setLayout(layout);
          connect(button,SIGNAL(clicked()),this,SLOT(drawRect()));
          connect(button3,SIGNAL(clicked()),this,SLOT(Reset()));
          connect(undo,SIGNAL(clicked()),this,SLOT(undoAction()));
      }
      else {
 
+         //creates various instances of buttons
          QPushButton *button3 = new QPushButton("Reset");
          button3->setFixedWidth(70);
-         button3->setFixedHeight(25);
+         button3->setFixedHeight(50);
+         button3->setStyleSheet(" border: 2px solid #8f8f91; " "background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,stop: 0 #2198c0, stop: 1 #0d5ca6);" "border-radius: 6px; " "min-width: 80px ");
 
          QPushButton *button2 = new QPushButton("Train Data");
          button2->setFixedWidth(80);
-         button2->setFixedHeight(25);
+         button2->setFixedHeight(50);
+         button2->setStyleSheet(" border: 2px solid #8f8f91; " "background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,stop: 0 #2198c0, stop: 1 #0d5ca6);" "border-radius: 6px; " "min-width: 80px ");
 
          QPushButton *finish = new QPushButton("Finish Training");
-         finish->setFixedWidth(110);
-         finish->setFixedHeight(25);
+         finish->setFixedWidth(170);
+         finish->setFixedHeight(50);
+         finish->setStyleSheet(" border: 2px solid #8f8f91; " "background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,stop: 0 #2198c0, stop: 1 #0d5ca6);" "border-radius: 6px; " "min-width: 80px ");
 
          back = new QPushButton("Back");
          back->setFixedWidth(70);
-         back->setFixedHeight(25);
+         back->setFixedHeight(50);
+         back->setStyleSheet(" border: 2px solid #8f8f91; " "background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,stop: 0 #2198c0, stop: 1 #0d5ca6);" "border-radius: 6px; " "min-width: 80px ");
 
-        // QHBoxLayout *layout = new QHBoxLayout;
+        // adding the widgets to layout
          layout->addWidget(button2);
          layout->addWidget(button3);
          layout->addWidget(finish);
@@ -97,21 +97,17 @@ void  MainWindow::MainWindowMaker()
 
 
       connect(back,SIGNAL(clicked()),this,SLOT(hide()));
-       connect(back,SIGNAL(clicked()),paa,SLOT(show()));
-    // QHBoxLayout *layout1 = new QHBoxLayout;
-     //scribbleArea->setLayout(layout1);
+      connect(back,SIGNAL(clicked()),paa,SLOT(show()));
      scribbleArea->setLayout(layout);
 
 }
 
- void MainWindow::setParameter(int a, splashScreen *parent){
+ void MainWindow::setParameter(int a, splashScreen *parent){  //sets window parameter 1-evaluation, 0-training
      val=a;
      paa=parent;
-     //
-     //
  }
 
- void MainWindow::createMenus()
+ void MainWindow::createMenus()  //create the menu and actions corresponding
   {
 
       optionMenu=menuBar()->addMenu(tr("&Options"));
@@ -124,7 +120,7 @@ void  MainWindow::MainWindowMaker()
 
  }
 
- void MainWindow::createActions()
+ void MainWindow::createActions()   //create actions to be generated on menu click
   {
      penColorAct = new QAction(tr("&Pen Color..."), this);
      connect(penColorAct, SIGNAL(triggered()), this, SLOT(penColor()));
@@ -144,23 +140,20 @@ void  MainWindow::MainWindowMaker()
      connect(creditsAct, SIGNAL(triggered()), this, SLOT(credit()));
  }
 
- void MainWindow::penColor()
+ void MainWindow::penColor()  //pen color instance
  {
      QColor newColor = QColorDialog::getColor(scribbleArea->penColor());
      if (newColor.isValid())
          scribbleArea->setPenColor(newColor);
  }
 
- void MainWindow::drawRect(){
+ void MainWindow::drawRect(){  //acts as bridge to draw rectangle on characters
      string out;
      out=scribbleArea->updateRect();
-
-    //if(out=="1+2*3"){cout<<"matching \n";}
     cout<<"printing the ecpression " ;
      ArithmeticExpression a;
      pair<bool,float> ans;
      ans=a.evaluate(out);
-     //cout<<"printing the ecpression " ;a.printExpression();
      string answer;
      if(ans.first==0) {
          answer=" !!! Wrong Expression ";
@@ -178,11 +171,11 @@ void  MainWindow::MainWindowMaker()
      output->setText(qstr);
  }
 
- void MainWindow::undoAction(){
+ void MainWindow::undoAction(){  //undo button action
      scribbleArea->undoAction();
  }
 
- void MainWindow::addTrainingData(){
+ void MainWindow::addTrainingData(){ //adds training data
      if(resetflag==0){
         scribbleArea->addTrainingData(traininginput->text());
         resetflag=1;
@@ -192,12 +185,12 @@ void  MainWindow::MainWindowMaker()
      }
  }
 
- void MainWindow::finishTraining(){
+ void MainWindow::finishTraining(){  //complete the training
      scribbleArea->finishTrain();
  }
 
 
- void MainWindow::penWidth()
+ void MainWindow::penWidth()   //pen width canging dialog box
  {
      bool ok;
      int newWidth = QInputDialog::getInteger(this, tr("Scribble"),
@@ -209,7 +202,7 @@ void  MainWindow::MainWindowMaker()
  }
 
 
- void MainWindow::about()
+ void MainWindow::about()  //about us dialog box
  {
      QMessageBox::about(this, tr("About Scribble"),
              tr("<p>The <b>Scribble</b> is the main scribbling pad "
@@ -222,7 +215,7 @@ void  MainWindow::MainWindowMaker()
  }
 
 
- void MainWindow::credit()
+ void MainWindow::credit()   //credits dialog box
  {
      QMessageBox msgBox;
      msgBox.setText(
@@ -236,10 +229,15 @@ void  MainWindow::MainWindowMaker()
      msgBox.exec();
  }
 
- void MainWindow::Reset(){
+ void MainWindow::Reset(){    //reset button slot
      scribbleArea->Reset();
      scribbleArea->clearImage();
-     output->setText("");
+     if(val==1){
+         output->setText("");
+     }
+     else{
+         traininginput->setText("");
+     }
 
      resetflag=0;
  }
