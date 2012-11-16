@@ -19,7 +19,7 @@ void readXY(float& x,float& y,ifstream& in){  //reading the x and y coordinate o
 }
 
 void readDatabase(multimap<string,feature>& trainingData){   //reads the complete database from database.txt
-    cout<<"entered\n";
+   // cout<<"entered\n";
     ifstream data;
     data.open("DataBase.txt");
     string key,symbol;char temp[5];
@@ -27,15 +27,15 @@ void readDatabase(multimap<string,feature>& trainingData){   //reads the complet
     Pt point;
     feature representative;
     whitespace(data);
-    cout<<"aftr ws "<<char(data.peek())<<endl;
+ //   cout<<"aftr ws "<<char(data.peek())<<endl;
     data.getline(temp,5,':');
     key=temp;
-    cout<<"key is"<<key.size()<<endl;
+  //  cout<<"key is"<<key.size()<<endl;
     while(key.size() < 3 ){
         whitespace(data);
         data.getline(temp,5,':');
         symbol=temp;
-        cout<<"symbol is"<<symbol<<endl;
+  //      cout<<"symbol is"<<symbol<<endl;
         while(symbol.size()==1){//it is a symbol
             vector<Pt> samplepts;
 
@@ -49,13 +49,10 @@ void readDatabase(multimap<string,feature>& trainingData){   //reads the complet
             whitespace(data);
             representative.id=symbol;
             representative.vec=samplepts;
-            //samplepts.erase(samplepts.begin());
-            //cout<<"size after erase"<<samplepts.size()<<endl;
             trainingData.insert(make_pair(key,representative));
-            cout<<"inserted into the map "<<key<<" , "<<symbol<<endl;
+     //       cout<<"inserted into the map "<<key<<" , "<<symbol<<endl;
             data.getline(temp,5,':');
             symbol=temp;
-            cout<<"aftr 36 "<<symbol<<endl;
 
         }
         key=symbol;

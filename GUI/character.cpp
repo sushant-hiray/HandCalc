@@ -18,7 +18,6 @@ void Character::print(){  //prints stroke list
 
 void Character::push(Stroke x){ //insert a new stroke
     if(slist.empty()) {minx=x.getMinx();miny=x.getMiny();maxx=x.getMaxx();maxy=x.getMaxy();
-        cout<<minx<<" "<<maxx<<endl;
     }
     else{
         if(x.getMinx()<minx) minx=x.getMinx();
@@ -111,8 +110,6 @@ void Character::ScaleCharacter(){   //scaling the character to 1x1 square
         sampledChar[i].y = (sampledChar[i].y - miny)*ratio;
 
     }
-    cout<<"Scaling "<<ratio<<endl;
-    cout<<minx<<" "<<maxx<<" "<<miny<<" "<<maxy<<endl;
     orgmaxx=maxx;
     maxx=(maxx-minx)*ratio;
     orgmaxy=maxy;
@@ -121,7 +118,6 @@ void Character::ScaleCharacter(){   //scaling the character to 1x1 square
     minx=(minx-minx)*ratio;
     orgminy=miny;
     miny=(miny-miny)*ratio;
-    cout<<minx<<" "<<maxx<<" "<<miny<<" "<<maxy<<endl;
 }
 
 void Character::printScaledSample(){   //used for debugging
@@ -160,16 +156,15 @@ string Character::preprocessing(){   //returns the key value after processing th
             return finalValue;
         }
         if(orientation==1){           //vertical stroke
-            cout<<"abc"<<endl;
             //vertical
             float fraction=2;
-            cout<<"stroke analysis "<<sampledChar[0].x<<" "<<sampledChar[sampledChar.size()-1].x<<" "<<minx<<" "<<maxx<<endl;
+
             if((maxx-minx)/(maxy-miny) < distortion){
-                cout<<"sampled "<<sampledChar[0].x<<" "<<sampledChar[sampledChar.size()-1].x<<" "<<minx<<" "<<maxx<<endl;
+
                 float leftcount=0;
                 float rightcount=0;
                 if(sampledChar[0].x==sampledChar[sampledChar.size()-1].x){   //finding the number of points which lie to left and right
-                    cout<<"qwe"<<endl;
+
                     for(int q=0;q<sampledChar.size();q++){
 
                         if(sampledChar[q].x <= sampledChar[0].x){
@@ -181,8 +176,6 @@ string Character::preprocessing(){   //returns the key value after processing th
                     }
                     float fraction;
                     fraction=leftcount/(leftcount + rightcount);
-                    cout<<"fraction is "<<fraction<<endl;
-                    cout<<leftcount<<" "<<rightcount<<endl;
                     float g=0.2;
                     float h=0.8;
                     if(fraction < g || fraction > h){
@@ -197,7 +190,7 @@ string Character::preprocessing(){   //returns the key value after processing th
 
                 }
                 else{
-                    cout<<"asd"<<endl;
+
                     float y2=sampledChar[sampledChar.size()-1].y;
                     float x2=sampledChar[sampledChar.size()-1].x;
                     float y1=sampledChar[0].y;
@@ -215,9 +208,9 @@ string Character::preprocessing(){   //returns the key value after processing th
                     }
                     float fraction;
 
-                    cout<<leftcount<<" "<<rightcount<<endl;
+
                     fraction=leftcount/(leftcount + rightcount);
-                     cout<<"fraction is "<<fraction<<endl;
+
                     float g=0.2;
                     float h=0.8;
                     if(fraction < g || fraction > h){  //Type V1
@@ -236,13 +229,12 @@ string Character::preprocessing(){   //returns the key value after processing th
                 return finalValue;
             }
             else if((maxx - max(sampledChar[0].x ,sampledChar[sampledChar.size()-1].x))*fraction<=(maxx-minx)){
-                cout<<"tyu"<<endl;
+
                 finalValue="V3";
                 return finalValue;
             }
             else{
-                cout<<maxx<<" "<<minx<<" "<<sampledChar[0].x<<" "<<sampledChar[sampledChar.size()-1].x<<endl;
-                cout<<"lkj"<<endl;
+
                 finalValue="V2";
                 return finalValue;
             }

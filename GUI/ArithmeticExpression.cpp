@@ -64,7 +64,7 @@ pair<bool,vector<string> > ArithmeticExpression::arrange(string str){
     vector<string> Arranged_String;
 
     if(isoperator(str[0]) || isoperator(str[str.size() -1]) || str==""){    //isoperator returns true if char is '+','-','*' or '/'
-        cout<<"in arrange 1"<<endl;
+
         return make_pair(false , Arranged_String);
     }
 
@@ -125,13 +125,11 @@ bool ArithmeticExpression::readExpression(string Input){				//function which rea
     //first arrange and then convert infix to postfix
     pair<bool,vector<string> > arranged_str = arrange(Input);
     if(!arranged_str.first){
-        cout<<"after arrange"<<endl;
         return false;
     }
 
     vector<string> str = infix_to_postfix(arranged_str.second);  //infix_to_postfix converts into its postfix expression and returns vector of strings
     for(int i=0;i<str.size();i++){
-        cout<<str[i]<<" ";
     }
 	string op;
 	TreeNode1 *t,*tl,*tr;
@@ -177,7 +175,6 @@ vector<string> ArithmeticExpression::infix_to_postfix(vector<string> to_be_evalu
 		infix_itr++;
 	}
 	while(Operator_Holder.size() !=0){
-        cout<<"....................................................coutter"<<endl;
 		postfix.push_back(Operator_Holder.top());
 		Operator_Holder.pop();
     }

@@ -150,7 +150,6 @@ void  MainWindow::MainWindowMaker()   //creation of GUI of window
  void MainWindow::drawRect(){  //acts as bridge to draw rectangle on characters
      string out;
      out=scribbleArea->updateRect();
-    cout<<"printing the ecpression " ;
      ArithmeticExpression a;
      pair<bool,float> ans;
      ans=a.evaluate(out);

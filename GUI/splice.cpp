@@ -54,14 +54,13 @@ void Splice::pushStrokePoint(int x, int y, long t){   //push stroke point in the
 }
 
 void Splice::setStrokeChange(){  //new stroke input!
-    float StrayStrokeLength = 20.0;
+    float StrayStrokeLength = 20.0;  //if stroke length <= 20 it is nt considered
     if(strokeCount >= 0){
-        cout<< "path length of stroke is" <<strokeList[strokeCount].getpathlength() << endl;
     }
     strokeChanged=true;
     //@@@
     if(strokeList[strokeCount].getpathlength()  < StrayStrokeLength) { //stray mark identified ignoring
-        cout<<"Stray mark .... Ignored \n";
+        cout<<"Stray mark Ignored \n";
         strokeCount-- ;
         strokeList.pop_back();
         return;
@@ -71,15 +70,12 @@ void Splice::setStrokeChange(){  //new stroke input!
     strokeList[strokeCount].updateSampleStroke();
     currpos=strokeCount; //cout<<"stroke count  is "<<strokeCount<<endl;
     charprocess();
-    cout<<"charprocessing done wiht stokelist size"<< strokeList.size()<<"charaaterlist size "<<characterList.size()<< " currpos" <<currpos<<"lastpro "<<lastpro<<endl;
-    //---@@@
 }
 
 
 //@@@
 int Splice::judge(int i,int j){
      float delta=(ydown-yup)*(0.1);
-     //cout<<"delta values "<<delta<<" "<<ydown<< " "<<yup<<"  VV.."<<i<<" "<<j<<strokeList[j].getMinx()<<" "<<strokeList[i].getMaxx()<<endl;
      if (delta < strokeList[i].getMinx()-strokeList[j].getMaxx()){
          //stroke boxes are seperated by more than delta
          return 1; //means 1st stroke can be treated as character
@@ -91,7 +87,6 @@ int Splice::judge(int i,int j){
  }
 
 void Splice::charprocess(){
-    //cout<<"processing now................"<<lastpro<< "    "<<currpos;
     int result=judge(lastpro,currpos);
     if(lastpro==currpos); //do nothing because only one stroke in hand so wait for next stroke
     else if(result==0){ //same character formed by two strokes at currpos and lastpro
@@ -107,13 +102,11 @@ void Splice::charprocess(){
     }
 
     else if(result==2) { //make lastpro a character and move lastpro pointr to currpos
-        //cout<<"########   into res 2  "<<strokeList[lastpro].getid()<<endl;
         Character temp;
         strokeList[lastpro].intocharlist=1;
         temp.push(strokeList[lastpro]);
         temp.process_character();
          characterList.push_back(temp);
-         //cout<<"printing the first character "<<characterList.size()<<"  ";characterList[0].print();cout<<endl;
 
          lastpro++;
     }
@@ -129,9 +122,8 @@ void Splice::charprocess(){
 }
 
 string Splice::lastCase(){
-    if(lastpro>currpos) ;//cout<<"WE are done \n";//we are done as last go coupled with sec-last
+    if(lastpro>currpos) ;//we are done as last go coupled with sec-last
          else{
-        cout<<"lastCase "<<lastpro<<" "<<currpos<<endl;
              Character temp;
              strokeList[strokeList.size()-1].intocharlist=1; //set flag (part of charlist) in the last stroke which is inserted as a character
              temp.push(strokeList[strokeList.size()-1]);
@@ -140,7 +132,7 @@ string Splice::lastCase(){
              //currpos++;
              lastpro++;
          }
-         //---@@@ END CASE HANDLED
+         // END CASE HANDLED
 
          cout<<"Printing characters formed \n no of characters ="<< characterList.size();
          for(int i=0;i<characterList.size();i++){
@@ -150,7 +142,7 @@ string Splice::lastCase(){
          cout<<"\nNumber of strokes identified "<<strokeList.size()<<endl;
          //@@@
 
-         cout<< "info about primary preprocessing ";
+         cout<< "info about primary preprocessing \n";
          string best;
          string output;
          for (int i=0;i<characterList.size();i++){
@@ -173,7 +165,6 @@ string Splice::lastCase(){
         }
          cout<<"final Result is "<<output<<endl;
          //Reset previous Data
-         cout<<characterList.size()<<" "<<strokeList.size()<<endl;
         return output;
 
 }
@@ -193,7 +184,6 @@ void Splice::TrainingProgram(){   //training data
          //END CASE HANDLED
 
          //updateSampleStroke
-         cout<<"Hello.....now printing about characters formed \n no of characters ="<< characterList.size();
          for(int i=0;i<characterList.size();i++){
              characterList[i].print();
          }
@@ -237,7 +227,6 @@ void Splice::writeMap(){   //after training is complete write all new data into 
     ofstream DataBase("DataBase.txt");
     for(list<string>::iterator i=Keys.begin();i!=Keys.end();i++){
         int count = trainingData.count(*i);
-        //pair<string,feature>::iterator trainingData.find(*i);
         DataBase<<(*i)<< ":\n";
         multimap<string,feature>::iterator local_it = trainingData.find(*i);
         for (int j=0;j<count ; ++local_it ,j++ ){
@@ -255,10 +244,9 @@ void Splice::ResetData(){   //Reset the data remove previous stroke from charact
      if(!characterList.empty()){
         characterList.erase(characterList.begin(),characterList.end());
      }
-     cout<<strokeList.size()<<"in reset Data   "<<characterList.size()<<endl;
     strokeChanged = true;
     strokeCount =-1;
- //@@@   for characterlist
+ // for characterlist
     lastpro=0;
     currpos=-1;
     yup=10000;
@@ -308,10 +296,10 @@ myRect Splice::backSpace(){
             characterList.pop_back();
         }
 
-        cout<<"DELETED last stroke NOW STROKELIST SIZE IS"<<strokeList.size()<<endl;
+        cout<<"Deleted last stroke Now stroke list size is "<<strokeList.size()<<endl;
     }
     else if(currpos<lastpro){ //lastly character was formed and so no lone stroke ,, delete this character
-        cout<<"deleting last character with charllistsize "<<characterList.size()<<endl;
+        cout<<"deleting last character with character list size  "<<characterList.size()<<endl;
         Character temp=characterList.back();
         delArea.x1=temp.orgminx;
         delArea.y1=temp.orgminy;

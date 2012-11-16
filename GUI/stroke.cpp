@@ -34,11 +34,6 @@ void Stroke::updateStroke(){   //updates the stroke information once the stroke 
     max_x=tempmaxx;
     max_y=tempmaxy;
     orientation=findOrientation(Delta);
-    cout<<"Minimum x is "<<min_x<<endl;
-    cout<<"Maximum x is "<<max_x<<endl;
-    cout<<"Minimum y is "<<min_y<<endl;
-    cout<<"Maximum y is "<<max_y<<endl;
-    cout<<"Orientation is "<<orientation<<endl;
 }
 
 void Stroke::updateSampleStroke(){   //update stroke information of the sampled stroke
@@ -97,13 +92,6 @@ void Stroke::updateSampleStroke(){   //update stroke information of the sampled 
             directionflag=0;
         }
     }
-
-    cout<<"Minimum x is "<<min_x<<endl;
-    cout<<"Maximum x is "<<max_x<<endl;
-    cout<<"Minimum y is "<<min_y<<endl;
-    cout<<"Maximum y is "<<max_y<<endl;
-    cout<<"Orientation is "<<orientation<<endl;
-    cout<<"Direction is "<<directionflag<<endl;
 }
 
 void Stroke::push(int x, int y, int time){  //push point into the stroke vector
@@ -127,9 +115,6 @@ int Stroke::findOrientation(float delta){  //finds orientation wrt a given delta
     int tempx=abs(sampled[0].x-sampled[sampled.size()-1].x);
     int tempy=abs(sampled[0].y-sampled[sampled.size()-1].y);
     float diagonal=sqrt(pow(max_x-min_x,2) + pow(max_y-min_y,2));
-    cout<<"first point is "<<sampled[0].x<<" , "<<sampled[0].y<<endl;
-    cout<<"final point is "<<sampled[sampled.size()-1].x<<" , "<<sampled[sampled.size()-1].y<<endl;
-    cout<<"diagonal is "<<diagonal<<endl;
     float checkx=tempx/diagonal;
     float checky=tempy/diagonal;
     if(checkx > delta && checky < delta ){
@@ -189,10 +174,6 @@ void Stroke::sampleStroke(){  //sample the original stroke vector
         next.x=stroke[pointer].x;next.y=stroke[pointer].y;
         findnext(prev,next,step,pointer);
     }
-    cout<<"sampled first point is "<<sampled[0].x<<" , "<<sampled[0].y<<endl;
-    cout<<"sampled last point is "<<sampled[sampled.size()-1].x<<" , "<<sampled[sampled.size()-1].y<<endl;
-
-
 }
 
 void Stroke::printSample(){  //print the sampled stroke used for debugging

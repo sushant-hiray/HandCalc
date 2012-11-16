@@ -11,8 +11,6 @@ using namespace std;
      setAttribute(Qt::WA_StaticContents);
      modified = false;
      scribbling = false;
-     //strokeChanged = false;
-     //strokeCount =-1;
      myPenWidth = 5;
      myPenColor = Qt::blue;
      myTimer.start();
@@ -118,7 +116,6 @@ using namespace std;
      }
 
      update();
-     cout<<"returning from updateRect\n";
      return out;
 
 
@@ -168,7 +165,6 @@ using namespace std;
 
  void  ScribbleArea::undoAction(){   //undo the previous character from the canvas
      myRect delArea=  BB.backSpace();
-     cout<<"deleting in the range" << delArea.x1 <<" "<<delArea.y1<<" "<<delArea.x2<<" "<<delArea.y2<<endl;
      QPainter painter(&image);
      painter.setPen(QPen(Qt::white, myPenWidth, Qt::SolidLine, Qt::RoundCap,
                          Qt::RoundJoin));
